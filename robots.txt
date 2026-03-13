@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://avienskin.com.ng/sitemap.xml
+
