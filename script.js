@@ -100,17 +100,18 @@ const products = [
   }
 ];
 
-const PRODUCT_ORIGIN_NOTE = "Avien 5.5 is manufactured in Maryland, USA.";
+const PRODUCT_ORIGIN_NOTE = "It was formulated in Maryland, USA, but manufactured in China.";
 
 const productAbout = {
   1: {
-    focus: "Smoothing + gentle exfoliation for rough texture.",
-    highlighted: ["Glycolic Acid (AHA)"],
-    bestFor: ["Rough texture / dullness", "Body bumps (KP) look", "Uneven texture on arms, legs, back"],
+    focus: "Avien 5.5 Glycolic Acid & Vitamin C Smoothing Body Lotion exfoliates dead skin and stimulates the cells to grow new skin cells, revealing a radiant and smoother texture. The co-active, Vitamin C, minimizes the appearance of dark spots and also improves the skins tone for that brighter complexion and glow. Suitable for all skin types and tones.",
+    highlighted: ["Glycolic Acid (AHA)", "Vitamin C"],
+    bestFor: ["Avien 5.5 Glycolic Acid & Vitamin C Smoothing Body Lotion exfoliates dead skin and stimulates the cells to grow new skin cells, revealing a radiant and smoother texture. The co-active, Vitamin C, minimizes the appearance of dark spots and also improves the skins tone for that brighter complexion and glow. Suitable for all skin types and tones."],
     composition: [
       "Highlighted AHA (glycolic acid) within a cleansing base",
       "Humectants + conditioning agents to reduce dryness",
-      "Fragrance and preservative system (see label for the full INCI list)"
+      "Fragrance and preservative system ",
+      "Vitamin C for antioxidant support and enhanced renewal benefits "
     ],
     howToUse: [
       "Use on wet skin, massage for 30–60 seconds, rinse well",
@@ -120,25 +121,27 @@ const productAbout = {
     caution: ["Patch test first", "Reduce frequency if stinging or peeling occurs"]
   },
   2: {
-    focus: "Glow care + support for the look of uneven tone.",
-    highlighted: ["Kojic Acid (brightening support)"],
-    bestFor: ["Dull-looking skin", "Uneven-looking tone", "Daily glow routine"],
+    focus: "Targets hyperpigmentation and dark spots for a brighter, more radiant complexion. Kojic acid inhibits melanin production, while tranexamic acid helps reduce the appearance of discoloration and supports an even skin tone. Suitable for all skin types and tones.",
+    highlighted: ["Kojic Acid", "Tranexamic Acid"],
+    bestFor: ["Dull-looking skin", "Uneven-looking tone", "Enhansing skin luminosity"],
     composition: [
       "Highlighted kojic acid within a cleansing base",
       "Humectants to help skin feel comfortable after cleansing",
-      "Fragrance and preservative system (see label for the full INCI list)"
+      "Fragrance and preservative system",
+      "Tranexamic acid for enhanced brightening and tone support"
     ],
     howToUse: [
       "Use on wet skin, massage, rinse well",
       "Follow with a lotion to lock in moisture",
-      "Introduce one brightening product focus at a time"
+      "Introduce one brightening product focus at a time",
+      "Be consistent for several weeks before switching routines"
     ],
     caution: ["Patch test first", "Do not over-exfoliate when using multiple actives"]
   },
   3: {
-    focus: "Brighten + refine the look of marks and uneven tone.",
+    focus: "AVIEN 5.5 The Purifier Alpha Arbutin + Niacinamide Body Wash – 750ml (26.4oz) helps to even out skin tone and minimize the appearance of hyperpigmentation, dark spots and other skin blemishes. Infused with Alpha Arbutin & Niacinamide, this gentle formula deeply cleanses the skin for a brighter, radiant and younger looking skin.",
     highlighted: ["Alpha Arbutin", "Niacinamide"],
-    bestFor: ["Uneven-looking tone", "Look of dark spots/marks", "Oil-balance support"],
+    bestFor: ["Uneven-looking tone", "Look of dark spots/marks and wrinkles", "Oil-balance support", "Cleanse and hydrates for an even toneed and brighter skin"],
     composition: [
       "Highlighted alpha arbutin + niacinamide within a cleansing base",
       "Humectants + conditioning agents for post-wash comfort",
@@ -149,16 +152,18 @@ const productAbout = {
       "Pair with The Purifier lotion for a simple matched routine",
       "Be consistent for several weeks before switching routines"
     ],
-    caution: ["Patch test first", "Stop use if irritation occurs"]
+    caution: ["Patch test first", "Avoid using multiple brightening products on the same day to reduce irritation risk"]
   },
   4: {
-    focus: "Everyday cleansing for a clean, fresh feel.",
-    highlighted: ["Everyday wash (no single active highlighted in the name)"],
+    focus: "This Wonder Body Wash is packed with great performing ingredients – Caffeine, Hyaluronic Shea ButterAcid,and special Niacinamide Complex. Formulated by renowned skincare experts to enhance your skin tone and texture.",
+    highlighted: ["Caffeine", "Hyaluronic Acid", "Shea Butter", "Niacinamide Complex"],
     bestFor: ["Daily showers", "Simple routines", "Pairing with any lotion in the range"],
     composition: [
-      "Cleansing base designed for everyday use",
-      "Skin-conditioning agents for a comfortable after-feel",
-      "Fragrance and preservative system (see label for the full INCI list)"
+      "Caffeine to help refresh the look of skin",
+      "Hyaluronic acid for hydration support",
+      "Shea butter for moisture and skin conditioning",
+      "Niacinamide Complex for enhanced skin benefits"
+
     ],
     howToUse: [
       "Use daily as your main body wash",
@@ -167,7 +172,7 @@ const productAbout = {
     caution: ["If you have very sensitive skin, patch test new products first"]
   },
   5: {
-    focus: "Clarifying wash for body breakouts and clogged pores.",
+    focus: "The Perfector Body Wash, fortified with 2% Salicylic Acid, encourages healthy exfoliation of skin and unclogging of pores, dissolves blackheads that contribute to acne. By cleansing your pores, it prevents breakouts on your back, chest and shoulders for an even smoother skin. Designed for dry, rough and bumpy, combination and oily skin.",
     highlighted: ["Salicylic Acid (BHA)"],
     bestFor: ["Body acne-prone areas (back/chest)", "Ingrown-hair prone areas", "Oily skin feel"],
     composition: [
@@ -183,13 +188,13 @@ const productAbout = {
     caution: ["Patch test first", "Avoid combining with multiple exfoliating products on the same day"]
   },
   6: {
-    focus: "Renewal-focused wash for a smoother-looking feel.",
-    highlighted: ["Retinol", "Collagen (support ingredient in the routine name)"],
+    focus: "Avien 5.5 The Restorer Body Wash supercharged with Retinol & Collagen, cleanses and helps restore the skin for a firm, nourished and younger looking skin",
+    highlighted: ["Retinol", "Collagen"],
     bestFor: ["Dull-looking skin", "Rough texture", "Night shower routines"],
     composition: [
       "Cleansing base with a renewal-focused positioning",
       "Conditioning agents to reduce tightness after washing",
-      "Fragrance and preservative system (see label for the full INCI list)"
+      "Fragrance and preservative system"
     ],
     howToUse: [
       "Use mainly in the evening if your skin is sensitive to retinoids",
@@ -198,12 +203,11 @@ const productAbout = {
     ],
     caution: [
       "Patch test first",
-      "If pregnant or breastfeeding, consult a clinician before using retinoid products",
-      "Stop use if irritation occurs"
+      
     ]
   },
   7: {
-    focus: "Daily lotion that supports bright, even-looking skin.",
+    focus: "Avien 5.5 The Purifier Body Lotion is formulated with Alpha Arbutin, Niacinamide and other superb ingredients that work in synergy to improve skin brightness, repair skin barrier, enhance overall skin tone and reduce skin sallowness caused by glycation. Suitable for all skin type and tones.",
     highlighted: ["Alpha Arbutin", "Niacinamide"],
     bestFor: ["Uneven-looking tone", "Dryness + dullness", "Post-shower moisture seal"],
     composition: [
@@ -215,43 +219,45 @@ const productAbout = {
     caution: ["Patch test first"]
   },
   8: {
-    focus: "Glow-focused lotion for daily radiance.",
-    highlighted: ["Kojic Acid (brightening support)"],
+    focus: "Avien 5.5 The Glow Getter Body Lotion (500ml) is a high-performance brightening moisturizer formulated with a potent duo of Kojic Acid and Tranexamic Acid. It is specifically designed to address stubborn skin concerns while maintaining a healthy skin-neutral pH.",
+    highlighted: ["Kojic Acid (brightening support), Tranexamic Acid (tone support)"],
     bestFor: ["Dull-looking skin", "Uneven-looking tone", "Daily moisturizing routine"],
     composition: [
       "Moisturizing base (emollients + humectants)",
       "Highlighted kojic-acid routine positioning (see label for exact INCI)",
-      "Fragrance and preservative system"
+      "Fragrance and preservative system",
+      "Tranexamic acid for enhanced brightening and tone support"
     ],
     howToUse: ["Apply after shower", "Use daily; be consistent for best results"],
     caution: ["Patch test first", "Use SPF on exposed skin in daytime"]
   },
   9: {
-    focus: "Comforting daily moisture for a soft feel.",
-    highlighted: ["Everyday lotion (routine companion)"],
+    focus: "Avien 5.5 Wonder Body Lotion. It’s a glow restoring, smoothing, repairing and balancing moisturize for all skin types and tones. Formulated, by renowned skincare experts, with powerful ingredients that improves the skin radiance and texture. With the brightening, repairing, and energizing effects of Caffeine to the skin balancing effects of our Niacinamide Complex, this formula helps give your skin a daily wonder.",
+    highlighted: ["Caffeine", "Niacinamide Complex", "Hyaluronic Acid", "Shea Butter"],
     bestFor: ["Dry, normal, and combination skin", "Daily body moisturising", "Layering with any wash"],
     composition: [
-      "Moisturizing base (emollients + humectants)",
-      "Barrier-comfort ingredients depending on batch (see label)",
-      "Fragrance and preservative system"
+      "Caffeine for a refreshed look, Niacinamide Complex for enhanced skin benefits, Hyaluronic Acid for hydration support, Shea Butter for moisture and skin conditioning",
+      "Niacinamide Complex for enhanced skin benefits, Hyaluronic Acid for hydration support, Shea Butter for moisture and skin conditioning",
+      "Formulated to be compatible with all the washes in the Avien 5.5 range for a balanced routine"
+
     ],
     howToUse: ["Apply generously after shower", "Reapply on dry areas as needed"],
     caution: ["Patch test first"]
   },
   10: {
-    focus: "Restoring moisture for a smoother-looking finish.",
-    highlighted: ["Restorer routine companion"],
-    bestFor: ["Dryness", "Rough texture", "Night routine pairing"],
+    focus: "Avien 5.5 The Restorer Retinol & Collagen Body Lotion is a fast absorbing formula crafted to restore skin elasticity, boost cell turnover and enhance skin texture for a more youthful glow with vitamin C complex. It also hydrates by locking up skin moisture, thereby leaving the skin softer with a smoother feel. Appropriate for all skin types and tones.",
+    highlighted: ["Retinol (renewal support)", "Collagen (firming support)"],
+    bestFor: ["Dull-looking skin", "Rough texture", "Nighttime moisture support"],
     composition: [
-      "Moisturizing base (emollients + humectants)",
-      "Routine-positioned ingredients (see label for full INCI)",
+      "Restorative moisturizing base (emollients + humectants)",
+      "Highlighted retinol + collagen routine positioning",
       "Fragrance and preservative system"
     ],
     howToUse: ["Apply after shower, especially at night", "Pair with The Restorer wash for a simple routine"],
     caution: ["Patch test first", "Use SPF on exposed skin in daytime"]
   },
   11: {
-    focus: "Brightening + daily moisture for glow care.",
+    focus: "Avien 5.5 The Brightener Vitamin C Body Lotion is a fast-absorbing, glow-boosting moisturizer formulated with a potent Vitamin C complex to help brighten the skin and enhance radiance. It also provides hydration and antioxidant support for a healthier-looking complexion. Suitable for all skin types and tones.",
     highlighted: ["Vitamin C (antioxidant support)"],
     bestFor: ["Dull-looking skin", "Daily glow routine", "Moisture + radiance support"],
     composition: [
@@ -263,19 +269,19 @@ const productAbout = {
     caution: ["Patch test first", "Use SPF on exposed skin in daytime"]
   },
   12: {
-    focus: "Smoothing moisture support for rough-feel skin.",
-    highlighted: ["Smoother routine companion"],
-    bestFor: ["Rough texture", "Dryness", "Pairing with Glycolic wash"],
+    focus: "Avien 5.5 The Smoother Glycolic Acid + Vitamin C Body Lotion (500ml) is a resurfacing and brightening moisturizer designed to exfoliate dead skin cells and promote the growth of new, healthier skin. It is specifically formulated to address rough texture and dullness across all skin types and tones",
+    highlighted: ["Glycolic Acid (AHA)", "Vitamin C (antioxidant support)"],
+    bestFor: ["Rough, bumpy skin", "Dull-looking skin", "Daily moisture + renewal support"],
     composition: [
-      "Moisturizing base (emollients + humectants)",
-      "Routine-positioned ingredients (see label for full INCI)",
+      "Resurfacing moisturizing base with glycolic acid and vitamin C routine positioning",
+      "Humectants + conditioning agents to support skin comfort and hydration",
       "Fragrance and preservative system"
     ],
     howToUse: ["Apply after shower", "Use daily, especially on rough areas"],
     caution: ["Patch test first", "Use SPF on exposed skin in daytime"]
   },
   13: {
-    focus: "Brightening cleanse for a fresh glow routine.",
+    focus: "AVIEN 5.5 The Brightener Vitamin C Body Wash 750ml is infused with Ascorbyl Glycoside – an Ascorbic Acid derivative with higher stability and penetration ability, Niacinamide and other powerful ingredients. From the first shower it penetrates the skin to stimulate the cells for a more even and brighter skin tone. Suitable for all skin types.",
     highlighted: ["Vitamin C (antioxidant support)"],
     bestFor: ["Dull-looking skin", "Daily glow routines", "Pairing with Vitamin C lotion"],
     composition: [

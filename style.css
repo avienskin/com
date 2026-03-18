@@ -649,6 +649,11 @@ h3 {
   color: var(--muted);
 }
 
+.site-footer .origin-note {
+  margin-top: 0.6rem;
+  line-height: 1.5;
+}
+
 .site-footer a {
   color: var(--text);
   text-decoration: none;
