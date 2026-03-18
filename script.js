@@ -100,6 +100,194 @@ const products = [
   }
 ];
 
+const PRODUCT_ORIGIN_NOTE = "Avien 5.5 is manufactured in Maryland, USA.";
+
+const productAbout = {
+  1: {
+    focus: "Smoothing + gentle exfoliation for rough texture.",
+    highlighted: ["Glycolic Acid (AHA)"],
+    bestFor: ["Rough texture / dullness", "Body bumps (KP) look", "Uneven texture on arms, legs, back"],
+    composition: [
+      "Highlighted AHA (glycolic acid) within a cleansing base",
+      "Humectants + conditioning agents to reduce dryness",
+      "Fragrance and preservative system (see label for the full INCI list)"
+    ],
+    howToUse: [
+      "Use on wet skin, massage for 30–60 seconds, rinse well",
+      "Start 3–4 times weekly, then adjust based on comfort",
+      "Moisturize after shower; use SPF on exposed skin in daytime"
+    ],
+    caution: ["Patch test first", "Reduce frequency if stinging or peeling occurs"]
+  },
+  2: {
+    focus: "Glow care + support for the look of uneven tone.",
+    highlighted: ["Kojic Acid (brightening support)"],
+    bestFor: ["Dull-looking skin", "Uneven-looking tone", "Daily glow routine"],
+    composition: [
+      "Highlighted kojic acid within a cleansing base",
+      "Humectants to help skin feel comfortable after cleansing",
+      "Fragrance and preservative system (see label for the full INCI list)"
+    ],
+    howToUse: [
+      "Use on wet skin, massage, rinse well",
+      "Follow with a lotion to lock in moisture",
+      "Introduce one brightening product focus at a time"
+    ],
+    caution: ["Patch test first", "Do not over-exfoliate when using multiple actives"]
+  },
+  3: {
+    focus: "Brighten + refine the look of marks and uneven tone.",
+    highlighted: ["Alpha Arbutin", "Niacinamide"],
+    bestFor: ["Uneven-looking tone", "Look of dark spots/marks", "Oil-balance support"],
+    composition: [
+      "Highlighted alpha arbutin + niacinamide within a cleansing base",
+      "Humectants + conditioning agents for post-wash comfort",
+      "Fragrance and preservative system (see label for the full INCI list)"
+    ],
+    howToUse: [
+      "Use on wet skin, massage, rinse well",
+      "Pair with The Purifier lotion for a simple matched routine",
+      "Be consistent for several weeks before switching routines"
+    ],
+    caution: ["Patch test first", "Stop use if irritation occurs"]
+  },
+  4: {
+    focus: "Everyday cleansing for a clean, fresh feel.",
+    highlighted: ["Everyday wash (no single active highlighted in the name)"],
+    bestFor: ["Daily showers", "Simple routines", "Pairing with any lotion in the range"],
+    composition: [
+      "Cleansing base designed for everyday use",
+      "Skin-conditioning agents for a comfortable after-feel",
+      "Fragrance and preservative system (see label for the full INCI list)"
+    ],
+    howToUse: [
+      "Use daily as your main body wash",
+      "Moisturize after shower with your preferred Avien 5.5 lotion"
+    ],
+    caution: ["If you have very sensitive skin, patch test new products first"]
+  },
+  5: {
+    focus: "Clarifying wash for body breakouts and clogged pores.",
+    highlighted: ["Salicylic Acid (BHA)"],
+    bestFor: ["Body acne-prone areas (back/chest)", "Ingrown-hair prone areas", "Oily skin feel"],
+    composition: [
+      "Highlighted BHA (salicylic acid) within a cleansing base",
+      "Humectants + soothing agents for balance",
+      "Fragrance and preservative system (see label for the full INCI list)"
+    ],
+    howToUse: [
+      "Use 3–5 times weekly on areas that need clarifying",
+      "Let the foam sit briefly (15–30 seconds), then rinse",
+      "Follow with a non-greasy lotion if you feel dry"
+    ],
+    caution: ["Patch test first", "Avoid combining with multiple exfoliating products on the same day"]
+  },
+  6: {
+    focus: "Renewal-focused wash for a smoother-looking feel.",
+    highlighted: ["Retinol", "Collagen (support ingredient in the routine name)"],
+    bestFor: ["Dull-looking skin", "Rough texture", "Night shower routines"],
+    composition: [
+      "Cleansing base with a renewal-focused positioning",
+      "Conditioning agents to reduce tightness after washing",
+      "Fragrance and preservative system (see label for the full INCI list)"
+    ],
+    howToUse: [
+      "Use mainly in the evening if your skin is sensitive to retinoids",
+      "Start 2–3 times weekly and increase gradually",
+      "Moisturize after shower; use SPF in daytime"
+    ],
+    caution: [
+      "Patch test first",
+      "If pregnant or breastfeeding, consult a clinician before using retinoid products",
+      "Stop use if irritation occurs"
+    ]
+  },
+  7: {
+    focus: "Daily lotion that supports bright, even-looking skin.",
+    highlighted: ["Alpha Arbutin", "Niacinamide"],
+    bestFor: ["Uneven-looking tone", "Dryness + dullness", "Post-shower moisture seal"],
+    composition: [
+      "Moisturizing base (emollients + humectants)",
+      "Highlighted alpha arbutin + niacinamide (see label for exact INCI)",
+      "Fragrance and preservative system"
+    ],
+    howToUse: ["Apply on clean, dry or slightly damp skin", "Use daily; focus on areas of concern"],
+    caution: ["Patch test first"]
+  },
+  8: {
+    focus: "Glow-focused lotion for daily radiance.",
+    highlighted: ["Kojic Acid (brightening support)"],
+    bestFor: ["Dull-looking skin", "Uneven-looking tone", "Daily moisturizing routine"],
+    composition: [
+      "Moisturizing base (emollients + humectants)",
+      "Highlighted kojic-acid routine positioning (see label for exact INCI)",
+      "Fragrance and preservative system"
+    ],
+    howToUse: ["Apply after shower", "Use daily; be consistent for best results"],
+    caution: ["Patch test first", "Use SPF on exposed skin in daytime"]
+  },
+  9: {
+    focus: "Comforting daily moisture for a soft feel.",
+    highlighted: ["Everyday lotion (routine companion)"],
+    bestFor: ["Dry, normal, and combination skin", "Daily body moisturising", "Layering with any wash"],
+    composition: [
+      "Moisturizing base (emollients + humectants)",
+      "Barrier-comfort ingredients depending on batch (see label)",
+      "Fragrance and preservative system"
+    ],
+    howToUse: ["Apply generously after shower", "Reapply on dry areas as needed"],
+    caution: ["Patch test first"]
+  },
+  10: {
+    focus: "Restoring moisture for a smoother-looking finish.",
+    highlighted: ["Restorer routine companion"],
+    bestFor: ["Dryness", "Rough texture", "Night routine pairing"],
+    composition: [
+      "Moisturizing base (emollients + humectants)",
+      "Routine-positioned ingredients (see label for full INCI)",
+      "Fragrance and preservative system"
+    ],
+    howToUse: ["Apply after shower, especially at night", "Pair with The Restorer wash for a simple routine"],
+    caution: ["Patch test first", "Use SPF on exposed skin in daytime"]
+  },
+  11: {
+    focus: "Brightening + daily moisture for glow care.",
+    highlighted: ["Vitamin C (antioxidant support)"],
+    bestFor: ["Dull-looking skin", "Daily glow routine", "Moisture + radiance support"],
+    composition: [
+      "Moisturizing base (emollients + humectants)",
+      "Highlighted vitamin C routine positioning (see label for exact INCI)",
+      "Fragrance and preservative system"
+    ],
+    howToUse: ["Apply after shower", "Use daily; pair with Vitamin C wash if desired"],
+    caution: ["Patch test first", "Use SPF on exposed skin in daytime"]
+  },
+  12: {
+    focus: "Smoothing moisture support for rough-feel skin.",
+    highlighted: ["Smoother routine companion"],
+    bestFor: ["Rough texture", "Dryness", "Pairing with Glycolic wash"],
+    composition: [
+      "Moisturizing base (emollients + humectants)",
+      "Routine-positioned ingredients (see label for full INCI)",
+      "Fragrance and preservative system"
+    ],
+    howToUse: ["Apply after shower", "Use daily, especially on rough areas"],
+    caution: ["Patch test first", "Use SPF on exposed skin in daytime"]
+  },
+  13: {
+    focus: "Brightening cleanse for a fresh glow routine.",
+    highlighted: ["Vitamin C (antioxidant support)"],
+    bestFor: ["Dull-looking skin", "Daily glow routines", "Pairing with Vitamin C lotion"],
+    composition: [
+      "Cleansing base with vitamin C routine positioning (see label for exact INCI)",
+      "Humectants + conditioning agents for comfort",
+      "Fragrance and preservative system"
+    ],
+    howToUse: ["Use on wet skin, massage, rinse", "Follow with The Brightener lotion"],
+    caution: ["Patch test first"]
+  }
+};
+
 const state = {
   search: "",
   category: "all",
@@ -133,8 +321,95 @@ const el = {
   prevPage: document.getElementById("prev-page"),
   nextPage: document.getElementById("next-page"),
   pageLabel: document.getElementById("page-label"),
-  cartToast: document.getElementById("cart-toast")
+  cartToast: document.getElementById("cart-toast"),
+  productAboutModal: document.getElementById("product-about-modal"),
+  productAboutTitle: document.getElementById("product-about-title"),
+  productAboutBody: document.getElementById("product-about-body"),
+  productAboutClose: document.getElementById("product-about-close"),
+  productAboutLearn: document.getElementById("product-about-learn")
 };
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function productType(name) {
+  const n = String(name || "").toLowerCase();
+  if (n.includes("body wash")) return "Body Wash";
+  if (n.includes("body lotion")) return "Body Lotion";
+  return "Body Care";
+}
+
+function productAnchor(id) {
+  return "product-" + id;
+}
+
+let lastFocusedEl = null;
+let previousHash = "";
+
+function closeProductAboutModal(opts) {
+  const options = Object.assign({ restoreFocus: true, restoreHash: true }, opts || {});
+  if (!el.productAboutModal) return;
+  el.productAboutModal.classList.remove("open");
+  el.productAboutModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+  if (options.restoreHash && window.location.hash && window.location.hash.startsWith("#product-")) {
+    if (previousHash) {
+      history.replaceState(null, "", window.location.pathname + window.location.search + previousHash);
+    } else {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  }
+  if (options.restoreFocus && lastFocusedEl && typeof lastFocusedEl.focus === "function") {
+    lastFocusedEl.focus();
+  }
+}
+
+function renderList(items) {
+  if (!items || !items.length) return "";
+  return "<ul>" + items.map(function (i) { return "<li>" + escapeHtml(i) + "</li>"; }).join("") + "</ul>";
+}
+
+function openProductAbout(id, opts) {
+  const options = Object.assign({ updateHash: true }, opts || {});
+  const product = products.find(function (p) { return p.id === id; });
+  if (!product || !el.productAboutModal || !el.productAboutBody) return;
+
+  const about = productAbout[id] || {};
+  const type = productType(product.name);
+
+  if (options.updateHash) {
+    previousHash = window.location.hash || "";
+    history.replaceState(null, "", "#"+productAnchor(id));
+  }
+
+  lastFocusedEl = document.activeElement;
+  document.body.classList.add("modal-open");
+  el.productAboutModal.classList.add("open");
+  el.productAboutModal.setAttribute("aria-hidden", "false");
+
+  if (el.productAboutTitle) el.productAboutTitle.textContent = product.name;
+  if (el.productAboutLearn) el.productAboutLearn.href = "about.html#" + productAnchor(id);
+
+  el.productAboutBody.innerHTML =
+    "<p class=\"meta\"><strong>Type:</strong> " + escapeHtml(type) + " &nbsp; • &nbsp; <strong>Category:</strong> " + escapeHtml(product.category) + "</p>" +
+    "<p><strong>Price:</strong> " + escapeHtml(formatNaira(product.price)) + "</p>" +
+    (about.focus ? "<p><strong>What it does:</strong> " + escapeHtml(about.focus) + "</p>" : "") +
+    (about.highlighted ? "<h3>Highlighted ingredients</h3>" + renderList(about.highlighted) : "") +
+    (about.bestFor ? "<h3>Best for</h3>" + renderList(about.bestFor) : "") +
+    (about.composition ? "<h3>Composition (high level)</h3>" + renderList(about.composition) : "") +
+    (about.howToUse ? "<h3>How to use</h3>" + renderList(about.howToUse) : "") +
+    (about.caution ? "<h3>Notes & safety</h3>" + renderList(about.caution) : "") +
+    "<p class=\"fine-print\">" + escapeHtml(PRODUCT_ORIGIN_NOTE) + "</p>" +
+    "<p class=\"fine-print\">Always read the label for the full ingredient list (INCI) and directions for your specific bottle.</p>";
+
+  if (el.productAboutClose) el.productAboutClose.focus();
+}
 function formatNaira(value) {
   return "N" + Number(value || 0).toLocaleString("en-NG");
 }
@@ -284,7 +559,10 @@ function renderProducts() {
       "<p class=\"meta\">" + p.category + "</p>" +
       "<div class=\"price-row\">" +
       "<span class=\"price\">" + formatNaira(p.price) + "</span>" +
-      "<button class=\"add-btn\" data-id=\"" + p.id + "\">Add to Cart</button>" +
+      "<span class=\"card-actions\">" +
+      "<button class=\"about-btn\" data-action=\"about\" data-id=\"" + p.id + "\">About</button>" +
+      "<button class=\"add-btn\" data-action=\"add\" data-id=\"" + p.id + "\">Add to Cart</button>" +
+      "</span>" +
       "</div>" +
       "</div>" +
       "</article>";
@@ -408,10 +686,11 @@ el.sort.addEventListener("change", function (e) {
   renderProducts();
 });
 el.grid.addEventListener("click", function (e) {
-  const btn = e.target.closest("button[data-id]");
+  const btn = e.target.closest("button[data-action][data-id]");
   if (!btn) return;
   const id = Number(btn.dataset.id);
-  addToCart(id);
+  if (btn.dataset.action === "add") addToCart(id);
+  if (btn.dataset.action === "about") openProductAbout(id);
 });
 el.cartItems.addEventListener("click", function (e) {
   const btn = e.target.closest("button[data-action][data-id]");
@@ -445,5 +724,33 @@ buildCategoryOptions();
 setupHeroSlider();
 renderProducts();
 renderCart();
+
+if (el.productAboutModal) {
+  el.productAboutModal.addEventListener("click", function (e) {
+    const shouldClose = e.target && e.target.closest && e.target.closest("[data-modal-close=\"true\"]");
+    if (!shouldClose) return;
+    closeProductAboutModal();
+  });
+}
+if (el.productAboutClose) {
+  el.productAboutClose.addEventListener("click", function () {
+    closeProductAboutModal();
+  });
+}
+document.addEventListener("keydown", function (e) {
+  if (e.key !== "Escape") return;
+  if (!el.productAboutModal || !el.productAboutModal.classList.contains("open")) return;
+  closeProductAboutModal();
+});
+
+function openProductAboutFromHash() {
+  const match = String(window.location.hash || "").match(/^#product-(\d+)$/);
+  if (!match) return;
+  const id = Number(match[1]);
+  if (!Number.isFinite(id)) return;
+  openProductAbout(id, { updateHash: false });
+}
+openProductAboutFromHash();
+window.addEventListener("hashchange", openProductAboutFromHash);
 
 
