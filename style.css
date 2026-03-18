@@ -269,6 +269,7 @@ select {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .price {
@@ -288,6 +289,8 @@ select {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-left: auto;
 }
 
 .about-btn {
@@ -889,6 +892,10 @@ h3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .price-row {
+    align-items: flex-start;
+  }
+
   .hero-media img {
     min-height: 200px;
   }
@@ -915,5 +922,21 @@ h3 {
 
   .gallery-hero {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .price-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .card-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .card-actions button {
+    flex: 1 1 auto;
   }
 }
