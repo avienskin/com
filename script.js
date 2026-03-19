@@ -12,91 +12,91 @@ const products = [
     name: "Avien 5.5 The Smoother Glycolic Acid Body Wash",
     brand: "Avien 5.5",
     price: 10500,
-    image: "images/1- Avien 5.5, the smoother glycolic acid body wash 10500naira.jpg"
+    image: "images/The Smoother Wash.webp"
   },
   {
     id: 2,
     name: "Avien 5.5 The Glow Getter Kojic Acid Body Wash",
     brand: "Avien 5.5",
     price: 10500,
-    image: "images/2- Avien 5.5, the glow getter korjic acid body wash 10500naira.jpg"
+    image: "images/The Glow Getter Wash.jpg"
   },
   {
     id: 3,
     name: "Avien 5.5 The Purifier Alpha Arbutin + Niacinamide Body Wash",
     brand: "Avien 5.5",
     price: 10500,
-    image: "images/3- Avien 5.5, the purifier alpha arbutin niacinamide body wash 10500naira.jpg"
+    image: "images/The Purifier Wash.jpeg"
   },
   {
     id: 4,
     name: "Avien 5.5 The Wonder Body Wash",
     brand: "Avien 5.5",
     price: 10500,
-    image: "images/4- Avien 5.5, the wonder body wash 10500naira.jpg"
+    image: "images/The Wonder Wash.jpg"
   },
   {
     id: 5,
     name: "Avien 5.5 The Perfector Salicylic Acid Body Wash",
     brand: "Avien 5.5",
     price: 10500,
-    image: "images/5- Avien 5.5, the perfector salicylic acid body wash 10500naira.jpg"
+    image: "images/The Perfector Wash.webp"
   },
   {
     id: 6,
     name: "Avien 5.5 The Restorer Retinol + Collagen Body Wash",
     brand: "Avien 5.5",
     price: 10500,
-    image: "images/6- Avien 5.5, the restorer retinol collagen body wash 10500naira.jpg"
+    image: "images/The Restorer Wash.webp"
   },
   {
     id: 7,
     name: "Avien 5.5 The Purifier Body Lotion",
     brand: "Avien 5.5",
     price: 11000,
-    image: "images/7- Avien 5.5, the purifier body lotion 11000.jpg"
+    image: "images/The Purifier Lotion.webp"
   },
   {
     id: 8,
     name: "Avien 5.5 The Glow Getter Body Lotion",
     brand: "Avien 5.5",
     price: 11000,
-    image: "images/8- Avien 5.5, the glo getter body lotion 11000naira.jpg"
+    image: "images/The Glow Getter Lotion.webp"
   },
   {
     id: 9,
     name: "Avien 5.5 The Wonder Body Lotion",
     brand: "Avien 5.5",
     price: 11000,
-    image: "images/9- Avien 5.5, wonder body lotion 11000naira.jpg"
+    image: "images/The Wonder Lotion.webp"
   },
   {
     id: 10,
     name: "Avien 5.5 The Restorer Body Lotion",
     brand: "Avien 5.5",
     price: 11000,
-    image: "images/10- Avien 5.5, the restorer body lotion 11000naira.jpg"
+    image: "images/The Restorer Lotion.webp"
   },
   {
     id: 11,
     name: "Avien 5.5 The Brightener Vitamin C Body Lotion",
     brand: "Avien 5.5",
     price: 11000,
-    image: "images/11- Avien 5.5, the brightener vitamin c body lotion 11000naira.jpg"
+    image: "images/The Brightener Lotion.webp"
   },
   {
     id: 12,
     name: "Avien 5.5 The Smoother Body Lotion",
     brand: "Avien 5.5",
     price: 11000,
-    image: "images/12- Avien 5.5, the smoother body lotion 11000naira.jpg"
+    image: "images/The Smoother Lotion.webp"
   },
   {
     id: 13,
     name: "Avien 5.5 The Brightener Vitamin C Body Wash",
     brand: "Avien 5.5",
     price: 10500,
-    image: "images/13- Avien 5.5, the brightner vitamin c body wash 10500naira.jpg"
+    image: "images/A0041.jpg"
   }
 ];
 
@@ -332,7 +332,11 @@ const el = {
   productAboutTitle: document.getElementById("product-about-title"),
   productAboutBody: document.getElementById("product-about-body"),
   productAboutClose: document.getElementById("product-about-close"),
-  productAboutLearn: document.getElementById("product-about-learn")
+  productAboutLearn: document.getElementById("product-about-learn"),
+  lightbox: document.getElementById("lightbox"),
+  lightboxImage: document.getElementById("lightbox-image"),
+  lightboxCaption: document.getElementById("lightbox-caption"),
+  lightboxClose: document.getElementById("lightbox-close")
 };
 
 function escapeHtml(value) {
@@ -363,7 +367,7 @@ function closeProductAboutModal(opts) {
   if (!el.productAboutModal) return;
   el.productAboutModal.classList.remove("open");
   el.productAboutModal.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("modal-open");
+  syncModalOpenClass();
   if (options.restoreHash && window.location.hash && window.location.hash.startsWith("#product-")) {
     if (previousHash) {
       history.replaceState(null, "", window.location.pathname + window.location.search + previousHash);
@@ -395,9 +399,9 @@ function openProductAbout(id, opts) {
   }
 
   lastFocusedEl = document.activeElement;
-  document.body.classList.add("modal-open");
   el.productAboutModal.classList.add("open");
   el.productAboutModal.setAttribute("aria-hidden", "false");
+  syncModalOpenClass();
 
   if (el.productAboutTitle) el.productAboutTitle.textContent = product.name;
   if (el.productAboutLearn) el.productAboutLearn.href = "about.html#" + productAnchor(id);
@@ -415,6 +419,39 @@ function openProductAbout(id, opts) {
     "<p class=\"fine-print\">Always read the label for the full ingredient list (INCI) and directions for your specific bottle.</p>";
 
   if (el.productAboutClose) el.productAboutClose.focus();
+}
+
+let lastFocusedLightboxEl = null;
+function syncModalOpenClass() {
+  const aboutOpen = el.productAboutModal && el.productAboutModal.classList.contains("open");
+  const lightboxOpen = el.lightbox && el.lightbox.classList.contains("open");
+  document.body.classList.toggle("modal-open", Boolean(aboutOpen || lightboxOpen));
+}
+function openLightboxFromImg(img) {
+  if (!img || !el.lightbox || !el.lightboxImage) return;
+  lastFocusedLightboxEl = document.activeElement;
+  el.lightboxImage.src = img.currentSrc || img.src;
+  el.lightboxImage.alt = img.alt || "Expanded product image";
+  if (el.lightboxCaption) el.lightboxCaption.textContent = img.alt || "";
+  el.lightbox.classList.add("open");
+  el.lightbox.setAttribute("aria-hidden", "false");
+  syncModalOpenClass();
+  if (el.lightboxClose) el.lightboxClose.focus();
+}
+function closeLightbox(opts) {
+  const options = Object.assign({ restoreFocus: true }, opts || {});
+  if (!el.lightbox) return;
+  el.lightbox.classList.remove("open");
+  el.lightbox.setAttribute("aria-hidden", "true");
+  if (el.lightboxImage) el.lightboxImage.src = "";
+  if (el.lightboxCaption) el.lightboxCaption.textContent = "";
+  syncModalOpenClass();
+
+  const aboutStillOpen = el.productAboutModal && el.productAboutModal.classList.contains("open");
+  if (options.restoreFocus && !aboutStillOpen && lastFocusedLightboxEl && typeof lastFocusedLightboxEl.focus === "function") {
+    lastFocusedLightboxEl.focus();
+  }
+  lastFocusedLightboxEl = null;
 }
 function formatNaira(value) {
   return "N" + Number(value || 0).toLocaleString("en-NG");
@@ -692,6 +729,11 @@ el.sort.addEventListener("change", function (e) {
   renderProducts();
 });
 el.grid.addEventListener("click", function (e) {
+  const img = e.target.closest && e.target.closest(".card img");
+  if (img) {
+    openLightboxFromImg(img);
+    return;
+  }
   const btn = e.target.closest("button[data-action][data-id]");
   if (!btn) return;
   const id = Number(btn.dataset.id);
@@ -699,6 +741,11 @@ el.grid.addEventListener("click", function (e) {
   if (btn.dataset.action === "about") openProductAbout(id);
 });
 el.cartItems.addEventListener("click", function (e) {
+  const img = e.target.closest && e.target.closest(".cart-item img");
+  if (img) {
+    openLightboxFromImg(img);
+    return;
+  }
   const btn = e.target.closest("button[data-action][data-id]");
   if (!btn) return;
   changeQty(Number(btn.dataset.id), btn.dataset.action);
@@ -743,10 +790,27 @@ if (el.productAboutClose) {
     closeProductAboutModal();
   });
 }
+if (el.lightbox) {
+  el.lightbox.addEventListener("click", function (e) {
+    if (e.target === el.lightbox || (e.target && e.target.closest && e.target.closest(".lightbox-close"))) {
+      closeLightbox();
+    }
+  });
+}
+if (el.lightboxClose) {
+  el.lightboxClose.addEventListener("click", function () {
+    closeLightbox();
+  });
+}
 document.addEventListener("keydown", function (e) {
   if (e.key !== "Escape") return;
-  if (!el.productAboutModal || !el.productAboutModal.classList.contains("open")) return;
-  closeProductAboutModal();
+  if (el.lightbox && el.lightbox.classList.contains("open")) {
+    closeLightbox();
+    return;
+  }
+  if (el.productAboutModal && el.productAboutModal.classList.contains("open")) {
+    closeProductAboutModal();
+  }
 });
 
 function openProductAboutFromHash() {
