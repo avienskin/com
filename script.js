@@ -12,7 +12,7 @@ const products = [
     name: "Avien 5.5 The Smoother Glycolic Acid Body Wash",
     brand: "Avien 5.5",
     price: 10500,
-    image: "images/The Smoother Wash.webp"
+    image: "images/The Smoother Wash.jpg"
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const products = [
     name: "Avien 5.5 The Purifier Alpha Arbutin + Niacinamide Body Wash",
     brand: "Avien 5.5",
     price: 10500,
-    image: "images/The Purifier Wash.jpeg"
+    image: "images/The Purifier Wash.jpg"
   },
   {
     id: 4,
@@ -40,42 +40,42 @@ const products = [
     name: "Avien 5.5 The Perfector Salicylic Acid Body Wash",
     brand: "Avien 5.5",
     price: 10500,
-    image: "images/The Perfector Wash.webp"
+    image: "images/The Perfector Wash.jpg"
   },
   {
     id: 6,
     name: "Avien 5.5 The Restorer Retinol + Collagen Body Wash",
     brand: "Avien 5.5",
     price: 10500,
-    image: "images/The Restorer Wash.webp"
+    image: "images/The Restorer Wash.jpg"
   },
   {
     id: 7,
     name: "Avien 5.5 The Purifier Body Lotion",
     brand: "Avien 5.5",
     price: 11000,
-    image: "images/The Purifier Lotion.webp"
+    image: "images/The Purifier Lotion.jpg"
   },
   {
     id: 8,
     name: "Avien 5.5 The Glow Getter Body Lotion",
     brand: "Avien 5.5",
     price: 11000,
-    image: "images/The Glow Getter Lotion.webp"
+    image: "images/The Glow Getter Lotion.jpg"
   },
   {
     id: 9,
     name: "Avien 5.5 The Wonder Body Lotion",
     brand: "Avien 5.5",
     price: 11000,
-    image: "images/The Wonder Lotion.webp"
+    image: "images/The Wonder Lotion.jpg"
   },
   {
     id: 10,
     name: "Avien 5.5 The Restorer Body Lotion",
     brand: "Avien 5.5",
     price: 11000,
-    image: "images/The Restorer Lotion.webp"
+    image: "images/The Restorer Lotion.jpg"
   },
   {
     id: 11,
@@ -89,14 +89,14 @@ const products = [
     name: "Avien 5.5 The Smoother Body Lotion",
     brand: "Avien 5.5",
     price: 11000,
-    image: "images/The Smoother Lotion.webp"
+    image: "images/The Smoother Lotion.jpg"
   },
   {
     id: 13,
     name: "Avien 5.5 The Brightener Vitamin C Body Wash",
     brand: "Avien 5.5",
     price: 10500,
-    image: "images/A0041.jpg"
+    image: "images/The Brightener Wash.jpg"
   }
 ];
 
