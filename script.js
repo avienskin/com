@@ -11,7 +11,7 @@ const products = [
     id: 1,
     name: "Avien 5.5 The Smoother Glycolic Acid Body Wash",
     brand: "Avien 5.5",
-    price: 10500,
+    price: 12500,
     image: "images/The Smoother Wash.jpg"
   },
   {
