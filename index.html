@@ -295,7 +295,33 @@
       </select>
     </section>
 
-    <section class="about-card" aria-label="Avien Skin overview">
+    
+
+    <section>
+      <p id="result-count" class="result-count"></p>
+      <div id="product-grid" class="product-grid"></div>
+      <div id="pagination" class="pagination" aria-label="Product navigation">
+        <button id="prev-page" class="btn btn-clear" type="button">Previous</button>
+        <span id="page-label" class="page-label">Page 1</span>
+        <button id="next-page" class="btn btn-checkout" type="button">Next</button>
+      </div>
+    </section>
+  </main>
+
+  <aside id="cart-panel" class="cart-panel" aria-hidden="true">
+    <div class="cart-head">
+      <h3>Your Cart</h3>
+      <button id="cart-close" class="icon-btn" aria-label="Close cart">X</button>
+    </div>
+    <div id="cart-items" class="cart-items"></div>
+    <div class="cart-foot">
+      <p><strong>Total:</strong> <span id="cart-total">N0</span></p>
+      <button id="checkout-btn" class="btn btn-checkout">Proceed to WhatsApp Checkout</button>
+      <button id="clear-cart" class="btn btn-clear">Clear Cart</button>
+    </div>
+  </aside>
+
+  <section class="about-card" aria-label="Avien Skin overview">
       <h2>The complete Avien 5.5 collection</h2>
       <p>
         Avien Skin is a Lagos-based stockist focused on one premium line: Avien 5.5. Browse every body wash and body lotion in the range, compare
@@ -345,30 +371,6 @@
         Need help choosing? Visit the <a href="about.html">About page</a> for quick guidance, or message us on WhatsApp from the button below.
       </p>
     </section>
-
-    <section>
-      <p id="result-count" class="result-count"></p>
-      <div id="product-grid" class="product-grid"></div>
-      <div id="pagination" class="pagination" aria-label="Product navigation">
-        <button id="prev-page" class="btn btn-clear" type="button">Previous</button>
-        <span id="page-label" class="page-label">Page 1</span>
-        <button id="next-page" class="btn btn-checkout" type="button">Next</button>
-      </div>
-    </section>
-  </main>
-
-  <aside id="cart-panel" class="cart-panel" aria-hidden="true">
-    <div class="cart-head">
-      <h3>Your Cart</h3>
-      <button id="cart-close" class="icon-btn" aria-label="Close cart">X</button>
-    </div>
-    <div id="cart-items" class="cart-items"></div>
-    <div class="cart-foot">
-      <p><strong>Total:</strong> <span id="cart-total">N0</span></p>
-      <button id="checkout-btn" class="btn btn-checkout">Proceed to WhatsApp Checkout</button>
-      <button id="clear-cart" class="btn btn-clear">Clear Cart</button>
-    </div>
-  </aside>
 
   <footer class="site-footer">
     <div class="footer-grid">
