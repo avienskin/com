@@ -633,6 +633,33 @@ function updateCartCounters() {
   el.cartCount.textContent = String(count);
   el.cartTotal.textContent = formatNaira(total);
 }
+function getSavedCart() {
+  try {
+    const stored = localStorage.getItem("avienCart");
+    const parsed = stored ? JSON.parse(stored) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    return [];
+  }
+}
+function saveCartState() {
+  try {
+    const items = cartArray().map(function (item) {
+      return { id: item.id, qty: item.qty };
+    });
+    localStorage.setItem("avienCart", JSON.stringify(items));
+  } catch (error) {
+    // ignore storage errors
+  }
+}
+function loadCartState() {
+  getSavedCart().forEach(function (item) {
+    const product = products.find(function (p) { return p.id === item.id; });
+    if (product && item.qty > 0) {
+      state.cart.set(item.id, Object.assign({}, product, { qty: item.qty }));
+    }
+  });
+}
 function renderCart() {
   const items = cartArray();
   if (!items.length) {
@@ -669,6 +696,7 @@ function addToCart(id) {
     state.cart.set(id, Object.assign({}, product, { qty: 1 }));
   }
   renderCart();
+  saveCartState();
   showCartToast(product.name + " added to cart.");
 }
 function changeQty(id, action) {
@@ -678,6 +706,7 @@ function changeQty(id, action) {
   if (action === "dec") item.qty -= 1;
   if (action === "remove" || item.qty <= 0) state.cart.delete(id);
   renderCart();
+  saveCartState();
 }
 function openCart() {
   el.cartPanel.classList.add("open");
@@ -711,7 +740,10 @@ function checkoutOnWhatsApp() {
   lines.push("Store Address: " + STORE.address);
   const text = encodeURIComponent(lines.join("\n"));
   const url = "https://wa.me/" + STORE.whatsapp + "?text=" + text;
-  window.open(url, "_blank");
+  const win = window.open(url, "_blank", "noopener,noreferrer");
+  if (!win) {
+    window.location.href = url;
+  }
 }
 el.search.addEventListener("input", function (e) {
   state.search = e.target.value;
@@ -772,8 +804,10 @@ el.checkout.addEventListener("click", checkoutOnWhatsApp);
 el.clearCart.addEventListener("click", function () {
   state.cart.clear();
   renderCart();
+  saveCartState();
 });
 buildCategoryOptions();
+loadCartState();
 setupHeroSlider();
 renderProducts();
 renderCart();
