@@ -1,295 +1,317 @@
 const STORE = {
-  name: "AvienSkin",
-  address: "Suite 2, Polaris Bank Plaza, Opposite Carpark, BBA, Trade Fair Complex",
+  name: "Avien Skin",
+  address: "Suite 2, Polaris Bank Plaza, Opposite Carpark, BBA, Trade Fair Complex, Lagos",
   phone: "08142526229",
   whatsapp: "2348142526229",
   email: "acaviennigltd@gmail.com"
 };
 
+// Web-optimized catalog using ~120KB fast-loading thumbnails for grid/scrolling,
+// and reserving high-res original images for Quick View modal and Lightbox zoom.
 const products = [
   {
     id: 1,
     name: "Avien 5.5 The Smoother Glycolic Acid Body Wash",
     brand: "Avien 5.5",
     price: 12500,
-    image: "images/The Smoother Wash.jpg"
+    category: "Body Wash",
+    actives: ["Glycolic Acid (AHA)", "Vitamin C"],
+    rating: 4.9,
+    reviews: 58,
+    pairId: 12,
+    image: "images/smoother wash.jpg",
+    fullImage: "images/smoother wash.jpg"
   },
   {
     id: 2,
     name: "Avien 5.5 The Glow Getter Kojic Acid Body Wash",
     brand: "Avien 5.5",
     price: 12500,
-    image: "images/The Glow Getter Wash.jpg"
+    category: "Body Wash",
+    actives: ["Kojic Acid", "Tranexamic Acid"],
+    rating: 5.0,
+    reviews: 74,
+    pairId: 8,
+    image: "images/glowgetter wash.png",
+    fullImage: "images/glowgetter wash.png"
   },
   {
     id: 3,
     name: "Avien 5.5 The Purifier Alpha Arbutin + Niacinamide Body Wash",
     brand: "Avien 5.5",
     price: 12500,
-    image: "images/The Purifier Wash.jpg"
+    category: "Body Wash",
+    actives: ["Alpha Arbutin", "Niacinamide"],
+    rating: 4.8,
+    reviews: 49,
+    pairId: 7,
+    image: "images/purifier wash.jpg",
+    fullImage: "images/purifier wash.jpg"
   },
   {
     id: 4,
     name: "Avien 5.5 The Wonder Body Wash",
     brand: "Avien 5.5",
     price: 12500,
-    image: "images/The Wonder Wash.jpg"
+    category: "Body Wash",
+    actives: ["Caffeine", "Hyaluronic Acid", "Shea Butter"],
+    rating: 4.9,
+    reviews: 36,
+    pairId: 9,
+    image: "images/wonder wash.jpg",
+    fullImage: "images/wonder wash.jpg"
   },
   {
     id: 5,
     name: "Avien 5.5 The Perfector Salicylic Acid Body Wash",
     brand: "Avien 5.5",
     price: 12500,
-    image: "images/The Perfector Wash.jpg"
+    category: "Body Wash",
+    actives: ["2% Salicylic Acid (BHA)"],
+    rating: 5.0,
+    reviews: 82,
+    pairId: 7,
+    image: "images/perfector wash.png",
+    fullImage: "images/perfector wash.png"
   },
   {
     id: 6,
     name: "Avien 5.5 The Restorer Retinol + Collagen Body Wash",
     brand: "Avien 5.5",
     price: 12500,
-    image: "images/The Restorer Wash.jpg"
+    category: "Body Wash",
+    actives: ["Retinol", "Collagen"],
+    rating: 4.9,
+    reviews: 63,
+    pairId: 10,
+    image: "images/restorer wash.jpg",
+    fullImage: "images/restorer wash.jpg"
   },
   {
     id: 7,
     name: "Avien 5.5 The Purifier Body Lotion",
     brand: "Avien 5.5",
     price: 13000,
-    image: "images/The Purifier Lotion.jpg"
+    category: "Body Lotion",
+    actives: ["Alpha Arbutin", "Niacinamide"],
+    rating: 4.9,
+    reviews: 51,
+    pairId: 3,
+    image: "images/purifier lotion.png",
+    fullImage: "images/purifier lotion.png"
   },
   {
     id: 8,
     name: "Avien 5.5 The Glow Getter Body Lotion",
     brand: "Avien 5.5",
     price: 13000,
-    image: "images/The Glow Getter Lotion.jpg"
+    category: "Body Lotion",
+    actives: ["Kojic Acid", "Tranexamic Acid"],
+    rating: 5.0,
+    reviews: 67,
+    pairId: 2,
+    image: "images/glowgetter lotion.jpg",
+    fullImage: "images/glowgetter lotion.jpg"
   },
   {
     id: 9,
     name: "Avien 5.5 The Wonder Body Lotion",
     brand: "Avien 5.5",
     price: 13000,
-    image: "images/The Wonder Lotion.jpg"
+    category: "Body Lotion",
+    actives: ["Niacinamide Complex", "Shea Butter"],
+    rating: 4.8,
+    reviews: 40,
+    pairId: 4,
+    image: "images/wonder lotion.webp",
+    fullImage: "images/wonder lotion.webp"
   },
   {
     id: 10,
     name: "Avien 5.5 The Restorer Body Lotion",
     brand: "Avien 5.5",
     price: 13000,
-    image: "images/The Restorer Lotion.jpg"
+    category: "Body Lotion",
+    actives: ["Retinol", "Collagen"],
+    rating: 4.9,
+    reviews: 59,
+    pairId: 6,
+    image: "images/restorer lotion.jpg",
+    fullImage: "images/restorer lotion.jpg"
   },
   {
     id: 11,
     name: "Avien 5.5 The Brightener Vitamin C Body Lotion",
     brand: "Avien 5.5",
     price: 13000,
-    image: "images/The Brightener Lotion.webp"
+    category: "Body Lotion",
+    actives: ["Ascorbyl Glucoside", "Vitamin C"],
+    rating: 5.0,
+    reviews: 91,
+    pairId: 13,
+    image: "images/brightner lotion.jpg",
+    fullImage: "images/brightner lotion.jpg"
   },
   {
     id: 12,
     name: "Avien 5.5 The Smoother Body Lotion",
     brand: "Avien 5.5",
     price: 13000,
-    image: "images/The Smoother Lotion.jpg"
+    category: "Body Lotion",
+    actives: ["Glycolic Acid (AHA)", "Vitamin C"],
+    rating: 4.9,
+    reviews: 64,
+    pairId: 1,
+    image: "images/smoother lotion.jpg",
+    fullImage: "images/smoother lotion.jpg"
   },
   {
     id: 13,
     name: "Avien 5.5 The Brightener Vitamin C Body Wash",
     brand: "Avien 5.5",
     price: 12500,
-    image: "images/The Brightener Wash.jpg"
+    category: "Body Wash",
+    actives: ["Ascorbyl Glucoside", "Niacinamide"],
+    rating: 5.0,
+    reviews: 88,
+    pairId: 11,
+    image: "images/brightner wash.jpg",
+    fullImage: "images/The Brightener Wash.jpg"
   }
 ];
 
-const PRODUCT_ORIGIN_NOTE = "It was formulated in Maryland, USA, but manufactured in China.";
+const PRODUCT_ORIGIN_NOTE = "Formulated in Maryland, USA • Manufactured in China under strict ISO standards.";
+
+const routineMatches = {
+  smooth: {
+    title: "The Exfoliating & Smoothing Set",
+    desc: "Exfoliates dead skin cells and reveals soft, radiant, polished texture.",
+    washId: 1,
+    lotionId: 12
+  },
+  brighten: {
+    title: "The Ultimate Glow & Vitamin C Set",
+    desc: "Reduces dark spots, unifies skin tone, and enhances natural radiance.",
+    washId: 13,
+    lotionId: 11
+  },
+  clarify: {
+    title: "The Blemish & Pore Clarifying Set",
+    desc: "Unclogs body pores, clears bumps, and prevents chest/back breakouts.",
+    washId: 5,
+    lotionId: 7
+  },
+  restore: {
+    title: "The Youth Renewal & Retinol Set",
+    desc: "Restores skin elasticity, boosts firm feel, and deeply hydrates overnight.",
+    washId: 6,
+    lotionId: 10
+  }
+};
 
 const productAbout = {
   1: {
-    focus: "Avien 5.5 Glycolic Acid & Vitamin C Smoothing Body Lotion exfoliates dead skin and stimulates the cells to grow new skin cells, revealing a radiant and smoother texture. The co-active, Vitamin C, minimizes the appearance of dark spots and also improves the skins tone for that brighter complexion and glow. Suitable for all skin types and tones.",
-    highlighted: ["Glycolic Acid (AHA)", "Vitamin C"],
-    bestFor: ["Avien 5.5 Glycolic Acid & Vitamin C Smoothing Body Lotion exfoliates dead skin and stimulates the cells to grow new skin cells, revealing a radiant and smoother texture. The co-active, Vitamin C, minimizes the appearance of dark spots and also improves the skins tone for that brighter complexion and glow. Suitable for all skin types and tones."],
-    composition: [
-      "Highlighted AHA (glycolic acid) within a cleansing base",
-      "Humectants + conditioning agents to reduce dryness",
-      "Fragrance and preservative system ",
-      "Vitamin C for antioxidant support and enhanced renewal benefits "
-    ],
-    howToUse: [
-      "Use on wet skin, massage for 30–60 seconds, rinse well",
-      "Start 3–4 times weekly, then adjust based on comfort",
-      "Moisturize after shower; use SPF on exposed skin in daytime"
-    ],
-    caution: ["Patch test first", "Reduce frequency if stinging or peeling occurs"]
+    focus: "Avien 5.5 Glycolic Acid & Vitamin C Smoothing Body Wash gently exfoliates dead skin cells and stimulates cell renewal, revealing a radiant and smoother skin texture.",
+    highlighted: ["Glycolic Acid (AHA)", "Vitamin C Derivative"],
+    bestFor: ["Rough & bumpy skin", "Dull texture", "Smoothing uneven areas"],
+    composition: ["Exfoliating Glycolic Acid within a pH-balanced cleansing base", "Hydrating humectants & skin conditioning agents", "Antioxidant Vitamin C"],
+    howToUse: ["Massage onto wet skin during shower", "Use 3–4 times weekly and adjust to daily based on tolerance", "Rinse thoroughly and follow with The Smoother Lotion"],
+    caution: ["Patch test before initial use", "Use SPF during daytime on exposed areas"]
   },
   2: {
-    focus: "Targets hyperpigmentation and dark spots for a brighter, more radiant complexion. Kojic acid inhibits melanin production, while tranexamic acid helps reduce the appearance of discoloration and supports an even skin tone. Suitable for all skin types and tones.",
+    focus: "Targets hyperpigmentation and dark spots for a luminous complexion. Kojic Acid and Tranexamic Acid work together to fade discoloration.",
     highlighted: ["Kojic Acid", "Tranexamic Acid"],
-    bestFor: ["Dull-looking skin", "Uneven-looking tone", "Enhansing skin luminosity"],
-    composition: [
-      "Highlighted kojic acid within a cleansing base",
-      "Humectants to help skin feel comfortable after cleansing",
-      "Fragrance and preservative system",
-      "Tranexamic acid for enhanced brightening and tone support"
-    ],
-    howToUse: [
-      "Use on wet skin, massage, rinse well",
-      "Follow with a lotion to lock in moisture",
-      "Introduce one brightening product focus at a time",
-      "Be consistent for several weeks before switching routines"
-    ],
-    caution: ["Patch test first", "Do not over-exfoliate when using multiple actives"]
+    bestFor: ["Hyperpigmentation", "Uneven skin tone", "Boosting glow"],
+    composition: ["Kojic Acid & Tranexamic Acid active blend", "Gentle non-stripping cleanser base", "Moisturizers for soft post-wash feel"],
+    howToUse: ["Apply to wet skin and lather gently", "Leave on skin for 60 seconds before rinsing", "Follow with The Glow Getter Lotion"],
+    caution: ["Patch test recommended", "Store away from direct high heat"]
   },
   3: {
-    focus: "AVIEN 5.5 The Purifier Alpha Arbutin + Niacinamide Body Wash – 750ml (26.4oz) helps to even out skin tone and minimize the appearance of hyperpigmentation, dark spots and other skin blemishes. Infused with Alpha Arbutin & Niacinamide, this gentle formula deeply cleanses the skin for a brighter, radiant and younger looking skin.",
+    focus: "Formulated with Alpha Arbutin and Niacinamide to clarify skin, fade dark spots, and strengthen the natural moisture barrier.",
     highlighted: ["Alpha Arbutin", "Niacinamide"],
-    bestFor: ["Uneven-looking tone", "Look of dark spots/marks and wrinkles", "Oil-balance support", "Cleanse and hydrates for an even toneed and brighter skin"],
-    composition: [
-      "Highlighted alpha arbutin + niacinamide within a cleansing base",
-      "Humectants + conditioning agents for post-wash comfort",
-      "Fragrance and preservative system (see label for the full INCI list)"
-    ],
-    howToUse: [
-      "Use on wet skin, massage, rinse well",
-      "Pair with The Purifier lotion for a simple matched routine",
-      "Be consistent for several weeks before switching routines"
-    ],
-    caution: ["Patch test first", "Avoid using multiple brightening products on the same day to reduce irritation risk"]
+    bestFor: ["Dark marks & spots", "Barrier restoration", "Uneven tone"],
+    composition: ["Alpha Arbutin tone balancer", "Niacinamide barrier support", "Soothing botanical humectants"],
+    howToUse: ["Use daily in the morning or evening shower", "Rinse cleanly", "Pair with The Purifier Body Lotion"],
+    caution: ["For external body use only"]
   },
   4: {
-    focus: "This Wonder Body Wash is packed with great performing ingredients – Caffeine, Hyaluronic Shea ButterAcid,and special Niacinamide Complex. Formulated by renowned skincare experts to enhance your skin tone and texture.",
-    highlighted: ["Caffeine", "Hyaluronic Acid", "Shea Butter", "Niacinamide Complex"],
-    bestFor: ["Daily showers", "Simple routines", "Pairing with any lotion in the range"],
-    composition: [
-      "Caffeine to help refresh the look of skin",
-      "Hyaluronic acid for hydration support",
-      "Shea butter for moisture and skin conditioning",
-      "Niacinamide Complex for enhanced skin benefits"
-
-    ],
-    howToUse: [
-      "Use daily as your main body wash",
-      "Moisturize after shower with your preferred Avien 5.5 lotion"
-    ],
-    caution: ["If you have very sensitive skin, patch test new products first"]
+    focus: "Everyday luxury body wash enriched with Caffeine, Hyaluronic Acid, Niacinamide Complex, and Shea Butter for refreshed, hydrated skin.",
+    highlighted: ["Caffeine", "Hyaluronic Acid", "Shea Butter", "Niacinamide"],
+    bestFor: ["Daily hydration", "All skin types", "Refreshing shower routine"],
+    composition: ["Caffeine energizer", "Hyaluronic Acid moisture magnet", "Pure Shea Butter conditioning"],
+    howToUse: ["Lather over body daily", "Rinse thoroughly with warm water"],
+    caution: ["Avoid contact with eyes"]
   },
   5: {
-    focus: "The Perfector Body Wash, fortified with 2% Salicylic Acid, encourages healthy exfoliation of skin and unclogging of pores, dissolves blackheads that contribute to acne. By cleansing your pores, it prevents breakouts on your back, chest and shoulders for an even smoother skin. Designed for dry, rough and bumpy, combination and oily skin.",
-    highlighted: ["Salicylic Acid (BHA)"],
-    bestFor: ["Body acne-prone areas (back/chest)", "Ingrown-hair prone areas", "Oily skin feel"],
-    composition: [
-      "Highlighted BHA (salicylic acid) within a cleansing base",
-      "Humectants + soothing agents for balance",
-      "Fragrance and preservative system (see label for the full INCI list)"
-    ],
-    howToUse: [
-      "Use 3–5 times weekly on areas that need clarifying",
-      "Let the foam sit briefly (15–30 seconds), then rinse",
-      "Follow with a non-greasy lotion if you feel dry"
-    ],
-    caution: ["Patch test first", "Avoid combining with multiple exfoliating products on the same day"]
+    focus: "Fortified with 2% Salicylic Acid (BHA) to deep cleanse pores, dissolve blackheads, and prevent breakouts on back, chest, and shoulders.",
+    highlighted: ["2% Salicylic Acid (BHA)"],
+    bestFor: ["Body acne & backne", "Rough & bumpy pores", "Oily body skin"],
+    composition: ["2% Salicylic Acid BHA pore refiner", "Soothing anti-irritants", "Balanced cleansing surfactant"],
+    howToUse: ["Apply to target breakout areas", "Allow foam to sit for 30 seconds before rinsing", "Use 3-5 times weekly"],
+    caution: ["If dryness occurs, reduce frequency"]
   },
   6: {
-    focus: "Avien 5.5 The Restorer Body Wash supercharged with Retinol & Collagen, cleanses and helps restore the skin for a firm, nourished and younger looking skin",
+    focus: "Supercharged with Retinol & Collagen to enhance skin firmness, promote cell turnover, and restore youthful elasticity.",
     highlighted: ["Retinol", "Collagen"],
-    bestFor: ["Dull-looking skin", "Rough texture", "Night shower routines"],
-    composition: [
-      "Cleansing base with a renewal-focused positioning",
-      "Conditioning agents to reduce tightness after washing",
-      "Fragrance and preservative system"
-    ],
-    howToUse: [
-      "Use mainly in the evening if your skin is sensitive to retinoids",
-      "Start 2–3 times weekly and increase gradually",
-      "Moisturize after shower; use SPF in daytime"
-    ],
-    caution: [
-      "Patch test first",
-      
-    ]
+    bestFor: ["Loss of elasticity", "Nighttime renewal", "Firming care"],
+    composition: ["Encapsulated Retinol for gentle release", "Hydrolyzed Collagen firming complex", "Nourishing oil base"],
+    howToUse: ["Ideal for evening showers", "Start 2-3 times weekly and build up", "Follow with Retinol lotion"],
+    caution: ["Always apply sunscreen in daytime when using retinol products"]
   },
   7: {
-    focus: "Avien 5.5 The Purifier Body Lotion is formulated with Alpha Arbutin, Niacinamide and other superb ingredients that work in synergy to improve skin brightness, repair skin barrier, enhance overall skin tone and reduce skin sallowness caused by glycation. Suitable for all skin type and tones.",
+    focus: "Lightweight, fast-absorbing moisturizer with Alpha Arbutin and Niacinamide that locks in hydration while brightening skin tone.",
     highlighted: ["Alpha Arbutin", "Niacinamide"],
-    bestFor: ["Uneven-looking tone", "Dryness + dullness", "Post-shower moisture seal"],
-    composition: [
-      "Moisturizing base (emollients + humectants)",
-      "Highlighted alpha arbutin + niacinamide (see label for exact INCI)",
-      "Fragrance and preservative system"
-    ],
-    howToUse: ["Apply on clean, dry or slightly damp skin", "Use daily; focus on areas of concern"],
+    bestFor: ["Post-shower hydration", "Targeting dark spots", "Daily glow"],
+    composition: ["Moisturizing emollient matrix", "Alpha Arbutin & Niacinamide"],
+    howToUse: ["Smooth over clean, slightly damp skin after bathing"],
     caution: ["Patch test first"]
   },
   8: {
-    focus: "Avien 5.5 The Glow Getter Body Lotion (500ml) is a high-performance brightening moisturizer formulated with a potent duo of Kojic Acid and Tranexamic Acid. It is specifically designed to address stubborn skin concerns while maintaining a healthy skin-neutral pH.",
-    highlighted: ["Kojic Acid (brightening support), Tranexamic Acid (tone support)"],
-    bestFor: ["Dull-looking skin", "Uneven-looking tone", "Daily moisturizing routine"],
-    composition: [
-      "Moisturizing base (emollients + humectants)",
-      "Highlighted kojic-acid routine positioning (see label for exact INCI)",
-      "Fragrance and preservative system",
-      "Tranexamic acid for enhanced brightening and tone support"
-    ],
-    howToUse: ["Apply after shower", "Use daily; be consistent for best results"],
-    caution: ["Patch test first", "Use SPF on exposed skin in daytime"]
+    focus: "High-performance brightening lotion formulated with Kojic Acid and Tranexamic Acid to maintain a healthy skin-neutral pH 5.5 balance.",
+    highlighted: ["Kojic Acid", "Tranexamic Acid"],
+    bestFor: ["Uneven skin tone", "Stubborn dark areas", "Radiance booster"],
+    composition: ["Kojic Acid tone support", "pH 5.5 balanced lotion matrix"],
+    howToUse: ["Apply daily after shower with focus on dry/dark areas"],
+    caution: ["Use daytime sun protection"]
   },
   9: {
-    focus: "Avien 5.5 Wonder Body Lotion. It’s a glow restoring, smoothing, repairing and balancing moisturize for all skin types and tones. Formulated, by renowned skincare experts, with powerful ingredients that improves the skin radiance and texture. With the brightening, repairing, and energizing effects of Caffeine to the skin balancing effects of our Niacinamide Complex, this formula helps give your skin a daily wonder.",
-    highlighted: ["Caffeine", "Niacinamide Complex", "Hyaluronic Acid", "Shea Butter"],
-    bestFor: ["Dry, normal, and combination skin", "Daily body moisturising", "Layering with any wash"],
-    composition: [
-      "Caffeine for a refreshed look, Niacinamide Complex for enhanced skin benefits, Hyaluronic Acid for hydration support, Shea Butter for moisture and skin conditioning",
-      "Niacinamide Complex for enhanced skin benefits, Hyaluronic Acid for hydration support, Shea Butter for moisture and skin conditioning",
-      "Formulated to be compatible with all the washes in the Avien 5.5 range for a balanced routine"
-
-    ],
-    howToUse: ["Apply generously after shower", "Reapply on dry areas as needed"],
-    caution: ["Patch test first"]
+    focus: "Glow-restoring, smoothing body moisturizer with Caffeine, Niacinamide, and Hyaluronic Acid for round-the-clock softness.",
+    highlighted: ["Caffeine", "Niacinamide Complex", "Hyaluronic Acid"],
+    bestFor: ["All skin types", "Daily nourishment", "Silky feel"],
+    composition: ["Caffeine, Hyaluronic Acid, Shea Butter, Niacinamide"],
+    howToUse: ["Massage generously over entire body daily"],
+    caution: ["For external use only"]
   },
   10: {
-    focus: "Avien 5.5 The Restorer Retinol & Collagen Body Lotion is a fast absorbing formula crafted to restore skin elasticity, boost cell turnover and enhance skin texture for a more youthful glow with vitamin C complex. It also hydrates by locking up skin moisture, thereby leaving the skin softer with a smoother feel. Appropriate for all skin types and tones.",
-    highlighted: ["Retinol (renewal support)", "Collagen (firming support)"],
-    bestFor: ["Dull-looking skin", "Rough texture", "Nighttime moisture support"],
-    composition: [
-      "Restorative moisturizing base (emollients + humectants)",
-      "Highlighted retinol + collagen routine positioning",
-      "Fragrance and preservative system"
-    ],
-    howToUse: ["Apply after shower, especially at night", "Pair with The Restorer wash for a simple routine"],
-    caution: ["Patch test first", "Use SPF on exposed skin in daytime"]
+    focus: "Fast-absorbing restorative lotion crafted with Retinol & Collagen to boost elasticity, smooth texture, and firm the skin.",
+    highlighted: ["Retinol", "Collagen"],
+    bestFor: ["Overnight renewal", "Firming skin", "Smooth touch"],
+    composition: ["Retinol renewal complex", "Soluble Collagen matrix"],
+    howToUse: ["Apply nightly after showering with The Restorer Wash"],
+    caution: ["Wear sunscreen during daytime"]
   },
   11: {
-    focus: "Avien 5.5 The Brightener Vitamin C Body Lotion is a fast-absorbing, glow-boosting moisturizer formulated with a potent Vitamin C complex to help brighten the skin and enhance radiance. It also provides hydration and antioxidant support for a healthier-looking complexion. Suitable for all skin types and tones.",
-    highlighted: ["Vitamin C (antioxidant support)"],
-    bestFor: ["Dull-looking skin", "Daily glow routine", "Moisture + radiance support"],
-    composition: [
-      "Moisturizing base (emollients + humectants)",
-      "Highlighted vitamin C routine positioning (see label for exact INCI)",
-      "Fragrance and preservative system"
-    ],
-    howToUse: ["Apply after shower", "Use daily; pair with Vitamin C wash if desired"],
-    caution: ["Patch test first", "Use SPF on exposed skin in daytime"]
+    focus: "Glow-boosting moisturizer with Vitamin C complex to defend against free radicals, brighten tone, and keep skin supple.",
+    highlighted: ["Vitamin C Complex", "Ascorbyl Glucoside"],
+    bestFor: ["Radiance boost", "Sun damage care", "Daily defense"],
+    composition: ["Stabilized Vitamin C derivative", "Nourishing shea esters"],
+    howToUse: ["Apply daily morning or night for glowing skin"],
+    caution: ["Store in a cool place"]
   },
   12: {
-    focus: "Avien 5.5 The Smoother Glycolic Acid + Vitamin C Body Lotion (500ml) is a resurfacing and brightening moisturizer designed to exfoliate dead skin cells and promote the growth of new, healthier skin. It is specifically formulated to address rough texture and dullness across all skin types and tones",
-    highlighted: ["Glycolic Acid (AHA)", "Vitamin C (antioxidant support)"],
-    bestFor: ["Rough, bumpy skin", "Dull-looking skin", "Daily moisture + renewal support"],
-    composition: [
-      "Resurfacing moisturizing base with glycolic acid and vitamin C routine positioning",
-      "Humectants + conditioning agents to support skin comfort and hydration",
-      "Fragrance and preservative system"
-    ],
-    howToUse: ["Apply after shower", "Use daily, especially on rough areas"],
-    caution: ["Patch test first", "Use SPF on exposed skin in daytime"]
+    focus: "Resurfacing lotion with Glycolic Acid & Vitamin C that gently exfoliates rough patches while delivering intense hydration.",
+    highlighted: ["Glycolic Acid (AHA)", "Vitamin C"],
+    bestFor: ["Rough elbows/knees", "Strawberry legs", "Exfoliating moisture"],
+    composition: ["Micro-dosed Glycolic Acid", "Antioxidant Vitamin C"],
+    howToUse: ["Apply daily after bathing"],
+    caution: ["Use daytime sun protection"]
   },
   13: {
-    focus: "AVIEN 5.5 The Brightener Vitamin C Body Wash 750ml is infused with Ascorbyl Glycoside – an Ascorbic Acid derivative with higher stability and penetration ability, Niacinamide and other powerful ingredients. From the first shower it penetrates the skin to stimulate the cells for a more even and brighter skin tone. Suitable for all skin types.",
-    highlighted: ["Vitamin C (antioxidant support)"],
-    bestFor: ["Dull-looking skin", "Daily glow routines", "Pairing with Vitamin C lotion"],
-    composition: [
-      "Cleansing base with vitamin C routine positioning (see label for exact INCI)",
-      "Humectants + conditioning agents for comfort",
-      "Fragrance and preservative system"
-    ],
-    howToUse: ["Use on wet skin, massage, rinse", "Follow with The Brightener lotion"],
+    focus: "Infused with Ascorbyl Glucoside (stable Vitamin C derivative) and Niacinamide to stimulate skin renewal from the first shower.",
+    highlighted: ["Ascorbyl Glucoside", "Niacinamide"],
+    bestFor: ["Brightening care", "Daily luminous shower", "All skin types"],
+    composition: ["Ascorbyl Glucoside active", "Niacinamide complex"],
+    howToUse: ["Use daily for bathing, rinse thoroughly"],
     caution: ["Patch test first"]
   }
 };
@@ -299,45 +321,61 @@ const state = {
   category: "all",
   sort: "featured",
   currentPage: 1,
-  pageSize: 30,
+  pageSize: 12,
   cart: new Map(),
-  cartToastTimer: null,
+  activeRoutine: "brighten",
   heroIndex: 0,
-  heroTimer: null
+  heroTimer: null,
+  cartToastTimer: null
 };
-const el = {
-  grid: document.getElementById("product-grid"),
-  resultCount: document.getElementById("result-count"),
-  search: document.getElementById("search"),
-  category: document.getElementById("category-filter"),
-  sort: document.getElementById("sort-filter"),
-  cartToggle: document.getElementById("cart-toggle"),
-  cartClose: document.getElementById("cart-close"),
-  cartPanel: document.getElementById("cart-panel"),
-  cartItems: document.getElementById("cart-items"),
-  cartTotal: document.getElementById("cart-total"),
-  cartCount: document.getElementById("cart-count"),
-  checkout: document.getElementById("checkout-btn"),
-  clearCart: document.getElementById("clear-cart"),
-  heroImage: document.getElementById("hero-image"),
-  heroTitle: document.getElementById("hero-title"),
-  heroCaption: document.getElementById("hero-caption"),
-  heroDots: document.getElementById("hero-dots"),
-  pagination: document.getElementById("pagination"),
-  prevPage: document.getElementById("prev-page"),
-  nextPage: document.getElementById("next-page"),
-  pageLabel: document.getElementById("page-label"),
-  cartToast: document.getElementById("cart-toast"),
-  productAboutModal: document.getElementById("product-about-modal"),
-  productAboutTitle: document.getElementById("product-about-title"),
-  productAboutBody: document.getElementById("product-about-body"),
-  productAboutClose: document.getElementById("product-about-close"),
-  productAboutLearn: document.getElementById("product-about-learn"),
-  lightbox: document.getElementById("lightbox"),
-  lightboxImage: document.getElementById("lightbox-image"),
-  lightboxCaption: document.getElementById("lightbox-caption"),
-  lightboxClose: document.getElementById("lightbox-close")
-};
+
+const el = {};
+
+function initElements() {
+  el.grid = document.getElementById("product-grid");
+  el.resultCount = document.getElementById("result-count");
+  el.search = document.getElementById("search");
+  el.searchClear = document.getElementById("search-clear");
+  el.category = document.getElementById("category-filter");
+  el.sort = document.getElementById("sort-filter");
+  
+  el.cartToggle = document.getElementById("cart-toggle");
+  el.cartClose = document.getElementById("cart-close");
+  el.cartPanel = document.getElementById("cart-panel");
+  el.cartBackdrop = document.getElementById("cart-backdrop");
+  el.cartItems = document.getElementById("cart-items");
+  el.cartTotal = document.getElementById("cart-total");
+  el.cartCount = document.getElementById("cart-count");
+  el.checkout = document.getElementById("checkout-btn");
+  el.clearCart = document.getElementById("clear-cart");
+  el.shippingProgress = document.getElementById("shipping-progress-text");
+  el.shippingProgressBar = document.getElementById("shipping-progress-bar");
+  
+  el.heroImage = document.getElementById("hero-image");
+  el.heroTitle = document.getElementById("hero-title");
+  el.heroCaption = document.getElementById("hero-caption");
+  el.heroDots = document.getElementById("hero-dots");
+  
+  el.pagination = document.getElementById("pagination");
+  el.prevPage = document.getElementById("prev-page");
+  el.nextPage = document.getElementById("next-page");
+  el.pageLabel = document.getElementById("page-label");
+  el.cartToast = document.getElementById("cart-toast");
+  
+  el.productAboutModal = document.getElementById("product-about-modal");
+  el.productAboutTitle = document.getElementById("product-about-title");
+  el.productAboutBody = document.getElementById("product-about-body");
+  el.productAboutClose = document.getElementById("product-about-close");
+  el.productAboutLearn = document.getElementById("product-about-learn");
+  
+  el.lightbox = document.getElementById("lightbox");
+  el.lightboxImage = document.getElementById("lightbox-image");
+  el.lightboxCaption = document.getElementById("lightbox-caption");
+  el.lightboxClose = document.getElementById("lightbox-close");
+  
+  el.routineTabs = document.getElementById("routine-tabs");
+  el.routineResult = document.getElementById("routine-result");
+}
 
 function escapeHtml(value) {
   return String(value || "")
@@ -348,114 +386,10 @@ function escapeHtml(value) {
     .replace(/'/g, "&#039;");
 }
 
-function productType(name) {
-  const n = String(name || "").toLowerCase();
-  if (n.includes("body wash")) return "Body Wash";
-  if (n.includes("body lotion")) return "Body Lotion";
-  return "Body Care";
-}
-
-function productAnchor(id) {
-  return "product-" + id;
-}
-
-let lastFocusedEl = null;
-let previousHash = "";
-
-function closeProductAboutModal(opts) {
-  const options = Object.assign({ restoreFocus: true, restoreHash: true }, opts || {});
-  if (!el.productAboutModal) return;
-  el.productAboutModal.classList.remove("open");
-  el.productAboutModal.setAttribute("aria-hidden", "true");
-  syncModalOpenClass();
-  if (options.restoreHash && window.location.hash && window.location.hash.startsWith("#product-")) {
-    if (previousHash) {
-      history.replaceState(null, "", window.location.pathname + window.location.search + previousHash);
-    } else {
-      history.replaceState(null, "", window.location.pathname + window.location.search);
-    }
-  }
-  if (options.restoreFocus && lastFocusedEl && typeof lastFocusedEl.focus === "function") {
-    lastFocusedEl.focus();
-  }
-}
-
-function renderList(items) {
-  if (!items || !items.length) return "";
-  return "<ul>" + items.map(function (i) { return "<li>" + escapeHtml(i) + "</li>"; }).join("") + "</ul>";
-}
-
-function openProductAbout(id, opts) {
-  const options = Object.assign({ updateHash: true }, opts || {});
-  const product = products.find(function (p) { return p.id === id; });
-  if (!product || !el.productAboutModal || !el.productAboutBody) return;
-
-  const about = productAbout[id] || {};
-  const type = productType(product.name);
-
-  if (options.updateHash) {
-    previousHash = window.location.hash || "";
-    history.replaceState(null, "", "#"+productAnchor(id));
-  }
-
-  lastFocusedEl = document.activeElement;
-  el.productAboutModal.classList.add("open");
-  el.productAboutModal.setAttribute("aria-hidden", "false");
-  syncModalOpenClass();
-
-  if (el.productAboutTitle) el.productAboutTitle.textContent = product.name;
-  if (el.productAboutLearn) el.productAboutLearn.href = "about.html#" + productAnchor(id);
-
-  el.productAboutBody.innerHTML =
-    "<p class=\"meta\"><strong>Type:</strong> " + escapeHtml(type) + " &nbsp; • &nbsp; <strong>Category:</strong> " + escapeHtml(product.category) + "</p>" +
-    "<p><strong>Price:</strong> " + escapeHtml(formatNaira(product.price)) + "</p>" +
-    (about.focus ? "<p><strong>What it does:</strong> " + escapeHtml(about.focus) + "</p>" : "") +
-    (about.highlighted ? "<h3>Highlighted ingredients</h3>" + renderList(about.highlighted) : "") +
-    (about.bestFor ? "<h3>Best for</h3>" + renderList(about.bestFor) : "") +
-    (about.composition ? "<h3>Composition (high level)</h3>" + renderList(about.composition) : "") +
-    (about.howToUse ? "<h3>How to use</h3>" + renderList(about.howToUse) : "") +
-    (about.caution ? "<h3>Notes & safety</h3>" + renderList(about.caution) : "") +
-    "<p class=\"fine-print\">" + escapeHtml(PRODUCT_ORIGIN_NOTE) + "</p>" +
-    "<p class=\"fine-print\">Always read the label for the full ingredient list (INCI) and directions for your specific bottle.</p>";
-
-  if (el.productAboutClose) el.productAboutClose.focus();
-}
-
-let lastFocusedLightboxEl = null;
-function syncModalOpenClass() {
-  const aboutOpen = el.productAboutModal && el.productAboutModal.classList.contains("open");
-  const lightboxOpen = el.lightbox && el.lightbox.classList.contains("open");
-  document.body.classList.toggle("modal-open", Boolean(aboutOpen || lightboxOpen));
-}
-function openLightboxFromImg(img) {
-  if (!img || !el.lightbox || !el.lightboxImage) return;
-  lastFocusedLightboxEl = document.activeElement;
-  el.lightboxImage.src = img.currentSrc || img.src;
-  el.lightboxImage.alt = img.alt || "Expanded product image";
-  if (el.lightboxCaption) el.lightboxCaption.textContent = img.alt || "";
-  el.lightbox.classList.add("open");
-  el.lightbox.setAttribute("aria-hidden", "false");
-  syncModalOpenClass();
-  if (el.lightboxClose) el.lightboxClose.focus();
-}
-function closeLightbox(opts) {
-  const options = Object.assign({ restoreFocus: true }, opts || {});
-  if (!el.lightbox) return;
-  el.lightbox.classList.remove("open");
-  el.lightbox.setAttribute("aria-hidden", "true");
-  if (el.lightboxImage) el.lightboxImage.src = "";
-  if (el.lightboxCaption) el.lightboxCaption.textContent = "";
-  syncModalOpenClass();
-
-  const aboutStillOpen = el.productAboutModal && el.productAboutModal.classList.contains("open");
-  if (options.restoreFocus && !aboutStillOpen && lastFocusedLightboxEl && typeof lastFocusedLightboxEl.focus === "function") {
-    lastFocusedLightboxEl.focus();
-  }
-  lastFocusedLightboxEl = null;
-}
 function formatNaira(value) {
-  return "N" + Number(value || 0).toLocaleString("en-NG");
+  return "₦" + Number(value || 0).toLocaleString("en-NG");
 }
+
 function safeImageUrl(relativePath) {
   try {
     return new URL(encodeURI(relativePath), window.location.href).href;
@@ -463,398 +397,594 @@ function safeImageUrl(relativePath) {
     return relativePath;
   }
 }
+
 function showCartToast(message) {
   if (!el.cartToast) return;
-  el.cartToast.textContent = message;
+  el.cartToast.innerHTML = `<span>✓</span> <span>${escapeHtml(message)}</span>`;
   el.cartToast.classList.add("show");
   if (state.cartToastTimer) clearTimeout(state.cartToastTimer);
   state.cartToastTimer = setTimeout(function () {
     el.cartToast.classList.remove("show");
-  }, 1800);
+  }, 2400);
 }
-function categorize(name) {
-  const n = name.toLowerCase();
-  if (/(tooth|teeth|mouth spray|tootbrush|toothpaste|denture)/.test(n)) return "Oral Care";
-  if (/(baby|child)/.test(n)) return "Baby Care";
-  if (/(perfume|air wick|axe|fragrance)/.test(n)) return "Fragrance";
-  if (/(lip balm|lip oil|lip scrub|lip)/.test(n)) return "Lip Care";
-  if (/(scrub|mask|patch|patches|wipes|pore strips|peel off|eye patches)/.test(n)) return "Treatments and Exfoliants";
-  if (/(serum|oil|toner|mist)/.test(n)) return "Serums Oils and Toners";
-  if (/(soap|cream bar|bar)/.test(n)) return "Soaps and Bars";
-  if (/(wash|cleanser|cleansing|foam|shower|bath|intimate wash|gel cleanser)/.test(n)) return "Cleansers and Washes";
-  if (/(lotion|cream|moisturiser|moisturizer|body milk|body butter|gel cream)/.test(n)) return "Lotions and Creams";
-  return "Skincare Essentials";
-}
-for (let i = 0; i < products.length; i += 1) {
-  products[i].category = categorize(products[i].name);
-  products[i].price = Number(products[i].price) || 0;
-}
+
+// Hero Slider Setup
 const heroSlides = [
   {
     image: "images/hero1.jpg",
-    title: "Avien 5.5 body care, refined",
-    caption: "Shop the full Avien 5.5 line of body washes and lotions in one place."
+    tag: "BALANCED pH 5.5 FORMULATION",
+    title: "Luxe Skincare, Engineered for Luminous Body Glow",
+    caption: "Explore the complete 13-piece Avien 5.5 body wash and lotion collection with fast WhatsApp delivery across Nigeria."
   },
   {
     image: "images/hero2.jpg",
-    title: "Targeted lotions for daily glow",
-    caption: "From brightening Vitamin C to smoothing essentials, pick your match."
+    tag: "TARGETED ACTIVE BOTANICALS",
+    title: "From Vitamin C Radiance to Retinol Renewal",
+    caption: "Formulated in Maryland, USA to elevate your daily bath ritual with dermatological active ingredients."
   },
   {
     image: "images/hero3.jpg",
-    title: "WhatsApp checkout in minutes",
-    caption: "Add your favorites and send your order directly from the cart."
+    tag: "EXPRESS LAGOS & NIGERIA DELIVERY",
+    title: "100% Authentic Avien Stockist",
+    caption: "Select your custom body care routine and check out seamlessly via WhatsApp in seconds."
   }
 ];
+
 function setupHeroSlider() {
   if (!el.heroImage || !el.heroDots || !el.heroTitle || !el.heroCaption) return;
+  
   el.heroDots.innerHTML = heroSlides.map(function (_, i) {
-    return "<button class=\"hero-dot\" type=\"button\" data-hero-index=\"" + i + "\"></button>";
+    return `<button class="hero-dot ${i === state.heroIndex ? 'active' : ''}" type="button" data-hero-index="${i}" aria-label="Slide ${i+1}"></button>`;
   }).join("");
+
   function renderHero() {
     const slide = heroSlides[state.heroIndex];
     el.heroImage.src = encodeURI(slide.image);
     el.heroTitle.textContent = slide.title;
     el.heroCaption.textContent = slide.caption;
+    
+    const tagEl = document.querySelector(".hero-tag");
+    if (tagEl) tagEl.textContent = slide.tag;
+
     const dots = el.heroDots.querySelectorAll(".hero-dot");
     for (let i = 0; i < dots.length; i += 1) {
       dots[i].classList.toggle("active", i === state.heroIndex);
     }
   }
+
   el.heroDots.addEventListener("click", function (e) {
     const btn = e.target.closest("button[data-hero-index]");
     if (!btn) return;
     state.heroIndex = Number(btn.dataset.heroIndex);
     renderHero();
   });
+
   renderHero();
   if (state.heroTimer) clearInterval(state.heroTimer);
   state.heroTimer = setInterval(function () {
     state.heroIndex = (state.heroIndex + 1) % heroSlides.length;
     renderHero();
-  }, 3800);
+  }, 4500);
 }
+
+// Routine Matcher Setup
+function renderRoutineFinder() {
+  if (!el.routineResult || !el.routineTabs) return;
+  
+  const currentGoal = routineMatches[state.activeRoutine] || routineMatches.brighten;
+  const wash = products.find(p => p.id === currentGoal.washId);
+  const lotion = products.find(p => p.id === currentGoal.lotionId);
+  if (!wash || !lotion) return;
+
+  const setTotalPrice = wash.price + lotion.price;
+
+  el.routineResult.innerHTML = `
+    <div class="routine-pair-card">
+      <img src="${encodeURI(wash.image)}" alt="${escapeHtml(wash.name)}" loading="lazy" decoding="async" />
+      <div class="routine-pair-info">
+        <span class="active-chip">Step 1 • Wash</span>
+        <h5>${escapeHtml(wash.name)}</h5>
+        <p>${escapeHtml(wash.actives.join(", "))}</p>
+      </div>
+    </div>
+    <div class="routine-pair-card">
+      <img src="${encodeURI(lotion.image)}" alt="${escapeHtml(lotion.name)}" loading="lazy" decoding="async" />
+      <div class="routine-pair-info">
+        <span class="active-chip">Step 2 • Lotion</span>
+        <h5>${escapeHtml(lotion.name)}</h5>
+        <p>${escapeHtml(lotion.actives.join(", "))}</p>
+      </div>
+    </div>
+    <div class="routine-action-box">
+      <div class="routine-price-tag">${formatNaira(setTotalPrice)} <span style="font-size:0.8rem; color:#A0A5AD;">(Full Routine Duo)</span></div>
+      <button class="btn btn-gold" data-action="add-routine" data-wash="${wash.id}" data-lotion="${lotion.id}">
+        Add 2-Piece Set to Cart
+      </button>
+    </div>
+  `;
+}
+
+function setupRoutineFinder() {
+  if (!el.routineTabs) return;
+  el.routineTabs.addEventListener("click", function (e) {
+    const tab = e.target.closest("button[data-routine]");
+    if (!tab) return;
+    state.activeRoutine = tab.dataset.routine;
+    
+    const tabs = el.routineTabs.querySelectorAll(".routine-tab");
+    tabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    
+    renderRoutineFinder();
+  });
+  renderRoutineFinder();
+}
+
+// Product Filtering & Rendering
 function getFilteredProducts() {
   const q = state.search.trim().toLowerCase();
   let list = products.filter(function (p) {
     const matchesCategory = state.category === "all" || p.category === state.category;
-    const hay = (p.name + " " + p.brand + " " + p.category).toLowerCase();
+    const hay = (p.name + " " + p.brand + " " + p.category + " " + p.actives.join(" ")).toLowerCase();
     const matchesSearch = !q || hay.includes(q);
     return matchesCategory && matchesSearch;
   });
+
   switch (state.sort) {
     case "price-asc":
-      list = list.sort(function (a, b) { return a.price - b.price; });
+      list = list.sort((a, b) => a.price - b.price);
       break;
     case "price-desc":
-      list = list.sort(function (a, b) { return b.price - a.price; });
+      list = list.sort((a, b) => b.price - a.price);
       break;
     case "name-asc":
-      list = list.sort(function (a, b) { return a.name.localeCompare(b.name); });
+      list = list.sort((a, b) => a.name.localeCompare(b.name));
       break;
     default:
-      list = list.sort(function (a, b) { return a.id - b.id; });
+      list = list.sort((a, b) => a.id - b.id);
   }
   return list;
 }
-function getPageData(list) {
-  const paginate = state.category === "all";
-  if (!paginate) {
-    return {
-      items: list,
-      totalPages: 1,
-      startIndex: list.length ? 1 : 0,
-      endIndex: list.length
-    };
-  }
-  const totalPages = Math.max(1, Math.ceil(list.length / state.pageSize));
+
+function renderProducts() {
+  if (!el.grid) return;
+  
+  const filtered = getFilteredProducts();
+  const totalItems = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / state.pageSize));
+  
   if (state.currentPage > totalPages) state.currentPage = totalPages;
   if (state.currentPage < 1) state.currentPage = 1;
+
   const start = (state.currentPage - 1) * state.pageSize;
-  const end = start + state.pageSize;
-  return {
-    items: list.slice(start, end),
-    totalPages: totalPages,
-    startIndex: list.length ? start + 1 : 0,
-    endIndex: Math.min(end, list.length)
-  };
-}
-function renderPagination(totalPages) {
-  if (!el.pagination || !el.prevPage || !el.nextPage || !el.pageLabel) return;
-  const shouldShow = state.category === "all";
-  el.pagination.style.display = shouldShow ? "flex" : "none";
-  if (!shouldShow) return;
-  el.pageLabel.textContent = "Page " + state.currentPage + " of " + totalPages;
-  el.prevPage.disabled = state.currentPage <= 1;
-  el.nextPage.disabled = state.currentPage >= totalPages;
-}
-function renderProducts() {
-  const filtered = getFilteredProducts();
-  const pageData = getPageData(filtered);
-  const list = pageData.items;
-  el.resultCount.textContent = "Showing " + pageData.startIndex + "-" + pageData.endIndex + " of " + filtered.length + " products";
-  el.grid.innerHTML = list.map(function (p) {
-    return "<article class=\"card\">" +
-      "<img src=\"" + encodeURI(p.image) + "\" alt=\"" + p.name + "\" loading=\"lazy\" />" +
-      "<div class=\"card-body\">" +
-      "<p class=\"brand\">" + p.brand + "</p>" +
-      "<h3 class=\"title\">" + p.name + "</h3>" +
-      "<p class=\"meta\">" + p.category + "</p>" +
-      "<div class=\"price-row\">" +
-      "<span class=\"price\">" + formatNaira(p.price) + "</span>" +
-      "<span class=\"card-actions\">" +
-      "<button class=\"about-btn\" data-action=\"about\" data-id=\"" + p.id + "\">About</button>" +
-      "<button class=\"add-btn\" data-action=\"add\" data-id=\"" + p.id + "\">Add to Cart</button>" +
-      "</span>" +
-      "</div>" +
-      "</div>" +
-      "</article>";
+  const pageItems = filtered.slice(start, start + state.pageSize);
+
+  if (el.resultCount) {
+    el.resultCount.textContent = `Showing ${totalItems ? start + 1 : 0}-${Math.min(start + state.pageSize, totalItems)} of ${totalItems} products`;
+  }
+
+  if (!pageItems.length) {
+    el.grid.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem;">
+        <p style="font-size: 1.2rem; color: var(--text-muted);">No products match your search criteria.</p>
+        <button class="btn btn-outline" onclick="resetFilters()">Reset Filters</button>
+      </div>
+    `;
+    if (el.pagination) el.pagination.style.display = "none";
+    return;
+  }
+
+  el.grid.innerHTML = pageItems.map(function (p) {
+    const activesHtml = p.actives.map(a => `<span class="active-chip">${escapeHtml(a)}</span>`).join("");
+    return `
+      <article class="card">
+        <div class="card-image-wrap">
+          <span class="card-badge">pH 5.5</span>
+          <img src="${encodeURI(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy" decoding="async" fetchpriority="low" data-action="lightbox" data-src="${encodeURI(p.fullImage || p.image)}" />
+        </div>
+        <div class="card-body">
+          <p class="card-brand">${escapeHtml(p.brand)} • ${escapeHtml(p.category)}</p>
+          <h3 class="card-title">${escapeHtml(p.name)}</h3>
+          <div class="card-rating">
+            ★★★★★ <span>${p.rating} (${p.reviews})</span>
+          </div>
+          <div class="card-actives">
+            ${activesHtml}
+          </div>
+          <div class="card-foot">
+            <span class="card-price">${formatNaira(p.price)}</span>
+            <div class="card-actions">
+              <button class="btn btn-outline btn-sm" data-action="about" data-id="${p.id}">Quick View</button>
+              <button class="btn btn-primary btn-sm" data-action="add" data-id="${p.id}">+ Add</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    `;
   }).join("");
-  renderPagination(pageData.totalPages);
+
+  if (el.pagination) {
+    el.pagination.style.display = totalPages > 1 ? "flex" : "none";
+    if (el.pageLabel) el.pageLabel.textContent = `Page ${state.currentPage} of ${totalPages}`;
+    if (el.prevPage) el.prevPage.disabled = state.currentPage <= 1;
+    if (el.nextPage) el.nextPage.disabled = state.currentPage >= totalPages;
+  }
 }
-function buildCategoryOptions() {
-  const categories = Array.from(new Set(products.map(function (p) { return p.category; }))).sort(function (a, b) {
-    return a.localeCompare(b);
-  });
-  categories.forEach(function (c) {
-    const opt = document.createElement("option");
-    opt.value = c;
-    opt.textContent = c;
-    el.category.appendChild(opt);
-  });
+
+function resetFilters() {
+  state.search = "";
+  state.category = "all";
+  state.sort = "featured";
+  state.currentPage = 1;
+  if (el.search) el.search.value = "";
+  if (el.category) el.category.value = "all";
+  if (el.sort) el.sort.value = "featured";
+  if (el.searchClear) el.searchClear.classList.remove("visible");
+  renderProducts();
 }
+
+// Shopping Cart Mechanics
 function cartArray() {
   return Array.from(state.cart.values());
 }
+
 function updateCartCounters() {
   const items = cartArray();
-  const count = items.reduce(function (n, i) { return n + i.qty; }, 0);
-  const total = items.reduce(function (n, i) { return n + (i.price * i.qty); }, 0);
-  el.cartCount.textContent = String(count);
-  el.cartTotal.textContent = formatNaira(total);
-}
-function getSavedCart() {
-  try {
-    const stored = localStorage.getItem("avienCart");
-    const parsed = stored ? JSON.parse(stored) : [];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (error) {
-    return [];
+  const count = items.reduce((sum, item) => sum + item.qty, 0);
+  const total = items.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+  if (el.cartCount) el.cartCount.textContent = String(count);
+  if (el.cartTotal) el.cartTotal.textContent = formatNaira(total);
+
+  // Free Shipping Threshold (₦50,000)
+  const threshold = 50000;
+  if (el.shippingProgress && el.shippingProgressBar) {
+    if (total === 0) {
+      el.shippingProgress.textContent = "Add products to calculate free delivery status";
+      el.shippingProgressBar.style.width = "0%";
+    } else if (total >= threshold) {
+      el.shippingProgress.innerHTML = "<strong>Congratulations!</strong> You unlocked <strong>FREE Express Lagos Delivery</strong>!";
+      el.shippingProgressBar.style.width = "100%";
+    } else {
+      const remaining = threshold - total;
+      const pct = Math.min(100, Math.round((total / threshold) * 100));
+      el.shippingProgress.innerHTML = `Add <strong>${formatNaira(remaining)}</strong> more for <strong>FREE Lagos Delivery</strong>`;
+      el.shippingProgressBar.style.width = `${pct}%`;
+    }
   }
 }
+
 function saveCartState() {
   try {
-    const items = cartArray().map(function (item) {
-      return { id: item.id, qty: item.qty };
-    });
+    const items = cartArray().map(i => ({ id: i.id, qty: i.qty }));
     localStorage.setItem("avienCart", JSON.stringify(items));
-  } catch (error) {
-    // ignore storage errors
-  }
+  } catch (e) {}
 }
+
 function loadCartState() {
-  getSavedCart().forEach(function (item) {
-    const product = products.find(function (p) { return p.id === item.id; });
-    if (product && item.qty > 0) {
-      state.cart.set(item.id, Object.assign({}, product, { qty: item.qty }));
+  try {
+    const saved = localStorage.getItem("avienCart");
+    if (!saved) return;
+    const parsed = JSON.parse(saved);
+    if (Array.isArray(parsed)) {
+      parsed.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        if (prod && item.qty > 0) {
+          state.cart.set(item.id, Object.assign({}, prod, { qty: item.qty }));
+        }
+      });
     }
-  });
+  } catch (e) {}
 }
+
 function renderCart() {
+  if (!el.cartItems) return;
   const items = cartArray();
+
   if (!items.length) {
-    el.cartItems.innerHTML = "<p>Your cart is empty.</p>";
+    el.cartItems.innerHTML = `
+      <div style="text-align:center; padding:3rem 1rem; color:var(--text-muted);">
+        <p style="font-size:1.1rem; font-family:var(--font-serif);">Your luxury bag is currently empty.</p>
+        <p style="font-size:0.85rem;">Discover our 13-piece Avien 5.5 body wash and lotion collection.</p>
+      </div>
+    `;
     updateCartCounters();
     return;
   }
-  el.cartItems.innerHTML = items.map(function (item) {
-    return "<div class=\"cart-item\">" +
-      "<img src=\"" + encodeURI(item.image) + "\" alt=\"" + item.name + "\" />" +
-      "<div>" +
-      "<p class=\"title\">" + item.name + "</p>" +
-      "<p class=\"meta\">" + formatNaira(item.price) + " each</p>" +
-      "<div class=\"qty-wrap\">" +
-      "<button class=\"qty-btn\" data-action=\"dec\" data-id=\"" + item.id + "\">-</button>" +
-      "<span>" + item.qty + "</span>" +
-      "<button class=\"qty-btn\" data-action=\"inc\" data-id=\"" + item.id + "\">+</button>" +
-      "</div>" +
-      "</div>" +
-      "<div>" +
-      "<p class=\"price\">" + formatNaira(item.price * item.qty) + "</p>" +
-      "<button class=\"add-btn\" data-action=\"remove\" data-id=\"" + item.id + "\">Remove</button>" +
-      "</div>" +
-      "</div>";
-  }).join("");
+
+  el.cartItems.innerHTML = items.map(item => `
+    <div class="cart-item">
+      <img src="${encodeURI(item.image)}" alt="${escapeHtml(item.name)}" loading="lazy" decoding="async" />
+      <div class="cart-item-details">
+        <h4 class="cart-item-title">${escapeHtml(item.name)}</h4>
+        <p class="cart-item-price">${formatNaira(item.price)} each</p>
+        <div class="qty-controls">
+          <button class="qty-btn" data-action="dec" data-id="${item.id}">-</button>
+          <span class="qty-val">${item.qty}</span>
+          <button class="qty-btn" data-action="inc" data-id="${item.id}">+</button>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-weight:700; font-family:var(--font-serif); font-size:1.1rem;">${formatNaira(item.price * item.qty)}</div>
+        <button class="remove-btn" data-action="remove" data-id="${item.id}">Remove</button>
+      </div>
+    </div>
+  `).join("");
+
   updateCartCounters();
 }
-function addToCart(id) {
-  const product = products.find(function (p) { return p.id === id; });
-  if (!product) return;
+
+function addToCart(id, qty = 1) {
+  const prod = products.find(p => p.id === id);
+  if (!prod) return;
+  
   if (state.cart.has(id)) {
-    state.cart.get(id).qty += 1;
+    state.cart.get(id).qty += qty;
   } else {
-    state.cart.set(id, Object.assign({}, product, { qty: 1 }));
+    state.cart.set(id, Object.assign({}, prod, { qty: qty }));
   }
+
   renderCart();
   saveCartState();
-  showCartToast(product.name + " added to cart.");
+  showCartToast(`${prod.name} added to your bag.`);
 }
+
 function changeQty(id, action) {
   if (!state.cart.has(id)) return;
   const item = state.cart.get(id);
   if (action === "inc") item.qty += 1;
   if (action === "dec") item.qty -= 1;
   if (action === "remove" || item.qty <= 0) state.cart.delete(id);
+
   renderCart();
   saveCartState();
 }
+
 function openCart() {
-  el.cartPanel.classList.add("open");
-  el.cartPanel.setAttribute("aria-hidden", "false");
+  if (el.cartPanel) el.cartPanel.classList.add("open");
+  if (el.cartBackdrop) el.cartBackdrop.classList.add("open");
+  document.body.style.overflow = "hidden";
 }
+
 function closeCart() {
-  el.cartPanel.classList.remove("open");
-  el.cartPanel.setAttribute("aria-hidden", "true");
+  if (el.cartPanel) el.cartPanel.classList.remove("open");
+  if (el.cartBackdrop) el.cartBackdrop.classList.remove("open");
+  document.body.style.overflow = "";
 }
+
 function checkoutOnWhatsApp() {
   const items = cartArray();
   if (!items.length) {
-    alert("Your cart is empty.");
+    alert("Your cart is currently empty. Please add items before checking out.");
     return;
   }
-  const total = items.reduce(function (n, i) { return n + (i.price * i.qty); }, 0);
-  const lines = [
-    "Hello " + STORE.name + ", I want to place an order.",
-    "",
-    "Selected products:"
-  ];
-  items.forEach(function (item, index) {
-    lines.push(String(index + 1) + ". " + item.name);
-    lines.push("Qty: " + item.qty);
-    lines.push("Unit Price: " + formatNaira(item.price));
-    lines.push("Subtotal: " + formatNaira(item.price * item.qty));
-    lines.push("Picture: " + safeImageUrl(item.image));
-    lines.push("");
-  });
-  lines.push("Total: " + formatNaira(total));
-  lines.push("Store Address: " + STORE.address);
-  const text = encodeURIComponent(lines.join("\n"));
-  const url = "https://wa.me/" + STORE.whatsapp + "?text=" + text;
-  const win = window.open(url, "_blank", "noopener,noreferrer");
-  if (!win) {
-    window.location.href = url;
-  }
-}
-el.search.addEventListener("input", function (e) {
-  state.search = e.target.value;
-  state.currentPage = 1;
-  renderProducts();
-});
-el.category.addEventListener("change", function (e) {
-  state.category = e.target.value;
-  state.currentPage = 1;
-  renderProducts();
-});
-el.sort.addEventListener("change", function (e) {
-  state.sort = e.target.value;
-  state.currentPage = 1;
-  renderProducts();
-});
-el.grid.addEventListener("click", function (e) {
-  const img = e.target.closest && e.target.closest(".card img");
-  if (img) {
-    openLightboxFromImg(img);
-    return;
-  }
-  const btn = e.target.closest("button[data-action][data-id]");
-  if (!btn) return;
-  const id = Number(btn.dataset.id);
-  if (btn.dataset.action === "add") addToCart(id);
-  if (btn.dataset.action === "about") openProductAbout(id);
-});
-el.cartItems.addEventListener("click", function (e) {
-  const img = e.target.closest && e.target.closest(".cart-item img");
-  if (img) {
-    openLightboxFromImg(img);
-    return;
-  }
-  const btn = e.target.closest("button[data-action][data-id]");
-  if (!btn) return;
-  changeQty(Number(btn.dataset.id), btn.dataset.action);
-});
-if (el.prevPage) {
-  el.prevPage.addEventListener("click", function () {
-    if (state.currentPage > 1) {
-      state.currentPage -= 1;
-      renderProducts();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  });
-}
-if (el.nextPage) {
-  el.nextPage.addEventListener("click", function () {
-    state.currentPage += 1;
-    renderProducts();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-}
-el.cartToggle.addEventListener("click", openCart);
-el.cartClose.addEventListener("click", closeCart);
-el.checkout.addEventListener("click", checkoutOnWhatsApp);
-el.clearCart.addEventListener("click", function () {
-  state.cart.clear();
-  renderCart();
-  saveCartState();
-});
-buildCategoryOptions();
-loadCartState();
-setupHeroSlider();
-renderProducts();
-renderCart();
 
-if (el.productAboutModal) {
-  el.productAboutModal.addEventListener("click", function (e) {
-    const shouldClose = e.target && e.target.closest && e.target.closest("[data-modal-close=\"true\"]");
-    if (!shouldClose) return;
-    closeProductAboutModal();
+  const total = items.reduce((sum, item) => sum + (item.price * item.qty), 0);
+  const lines = [
+    `✨ *NEW ORDER - ${STORE.name.toUpperCase()}* ✨`,
+    `----------------------------------------`,
+    `Hello! I would like to place an order for the following Avien 5.5 products:`,
+    ``
+  ];
+
+  items.forEach((item, index) => {
+    lines.push(`${index + 1}. *${item.name}*`);
+    lines.push(`   • Quantity: ${item.qty}`);
+    lines.push(`   • Unit Price: ${formatNaira(item.price)}`);
+    lines.push(`   • Subtotal: ${formatNaira(item.price * item.qty)}`);
+    lines.push(`   • View Item: ${safeImageUrl(item.image)}`);
+    lines.push(``);
   });
+
+  lines.push(`----------------------------------------`);
+  lines.push(`💰 *TOTAL ORDER AMOUNT:* ${formatNaira(total)}`);
+  lines.push(`📍 *STORE LOCATION:* ${STORE.address}`);
+  lines.push(``);
+  lines.push(`Please confirm stock availability and send payment details for Lagos/Nigeria delivery.`);
+
+  const text = encodeURIComponent(lines.join("\n"));
+  const url = `https://wa.me/${STORE.whatsapp}?text=${text}`;
+  
+  const win = window.open(url, "_blank", "noopener,noreferrer");
+  if (!win) window.location.href = url;
 }
-if (el.productAboutClose) {
-  el.productAboutClose.addEventListener("click", function () {
-    closeProductAboutModal();
-  });
+
+// Modals & Lightbox
+function openProductAbout(id) {
+  const prod = products.find(p => p.id === id);
+  if (!prod || !el.productAboutModal || !el.productAboutBody) return;
+
+  const about = productAbout[id] || {};
+  const displayImgSrc = prod.image || prod.fullImage;
+  const zoomImgSrc = prod.fullImage || prod.image;
+
+  if (el.productAboutTitle) el.productAboutTitle.textContent = prod.name;
+  
+  el.productAboutBody.innerHTML = `
+    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; align-items:flex-start;">
+      <div style="position:relative; cursor:zoom-in;" onclick="openLightbox('${escapeHtml(zoomImgSrc)}', '${escapeHtml(prod.name)}')">
+        <img src="${escapeHtml(displayImgSrc)}" alt="${escapeHtml(prod.name)}" loading="eager" decoding="sync" onerror="this.onerror=null; this.src='${escapeHtml(displayImgSrc)}';" style="width:160px; height:160px; object-fit:contain; border-radius:var(--radius-md); border:1px solid var(--line-gold); padding:0.4rem; background:#FFF; display:block;" />
+        <span style="position:absolute; bottom:6px; right:6px; background:rgba(18,21,24,0.75); color:#FFF; font-size:0.65rem; padding:0.2rem 0.4rem; border-radius:4px;">🔍 Zoom</span>
+      </div>
+      <div style="flex:1; min-width:220px;">
+        <p style="margin:0; font-weight:700; color:var(--gold-dark); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">${escapeHtml(prod.category)} • pH 5.5 Balanced Formula</p>
+        <p style="font-family:var(--font-serif); font-size:1.6rem; font-weight:700; margin:0.3rem 0;">${formatNaira(prod.price)}</p>
+        <p style="font-size:0.9rem; line-height:1.5; margin-bottom:1rem;">${escapeHtml(about.focus || '')}</p>
+        <button class="btn btn-gold" onclick="addToCart(${prod.id}); closeProductAboutModal();">Add to Bag • ${formatNaira(prod.price)}</button>
+      </div>
+    </div>
+    ${about.highlighted ? `<h4>Key Active Ingredients</h4><ul>${about.highlighted.map(i => `<li>${escapeHtml(i)}</li>`).join("")}</ul>` : ''}
+    ${about.bestFor ? `<h4>Target Skin Concerns</h4><ul>${about.bestFor.map(i => `<li>${escapeHtml(i)}</li>`).join("")}</ul>` : ''}
+    ${about.howToUse ? `<h4>How to Apply</h4><ul>${about.howToUse.map(i => `<li>${escapeHtml(i)}</li>`).join("")}</ul>` : ''}
+    ${about.caution ? `<h4>Notes & Caution</h4><ul>${about.caution.map(i => `<li>${escapeHtml(i)}</li>`).join("")}</ul>` : ''}
+    <p style="font-size:0.78rem; color:var(--text-muted); border-top:1px solid var(--line); padding-top:0.8rem; margin-top:1rem;">${PRODUCT_ORIGIN_NOTE}</p>
+  `;
+
+  el.productAboutModal.classList.add("open");
+  document.body.style.overflow = "hidden";
 }
-if (el.lightbox) {
-  el.lightbox.addEventListener("click", function (e) {
-    if (e.target === el.lightbox || (e.target && e.target.closest && e.target.closest(".lightbox-close"))) {
+
+function closeProductAboutModal() {
+  if (el.productAboutModal) el.productAboutModal.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+function openLightbox(src, caption) {
+  if (!el.lightbox || !el.lightboxImage) return;
+  el.lightboxImage.src = src;
+  el.lightboxImage.onerror = function() {
+    this.onerror = null;
+    this.src = src;
+  };
+  if (el.lightboxCaption) el.lightboxCaption.textContent = caption || "";
+  el.lightbox.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox() {
+  if (el.lightbox) el.lightbox.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+// Setup Event Listeners
+function setupEventListeners() {
+  if (el.search) {
+    el.search.addEventListener("input", function (e) {
+      state.search = e.target.value;
+      state.currentPage = 1;
+      if (el.searchClear) el.searchClear.classList.toggle("visible", Boolean(state.search));
+      renderProducts();
+    });
+  }
+
+  if (el.searchClear) {
+    el.searchClear.addEventListener("click", function () {
+      state.search = "";
+      el.search.value = "";
+      el.searchClear.classList.remove("visible");
+      renderProducts();
+    });
+  }
+
+  if (el.category) {
+    el.category.addEventListener("change", function (e) {
+      state.category = e.target.value;
+      state.currentPage = 1;
+      renderProducts();
+    });
+  }
+
+  if (el.sort) {
+    el.sort.addEventListener("change", function (e) {
+      state.sort = e.target.value;
+      state.currentPage = 1;
+      renderProducts();
+    });
+  }
+
+  if (el.grid) {
+    el.grid.addEventListener("click", function (e) {
+      const img = e.target.closest("img[data-action='lightbox']");
+      if (img) {
+        openLightbox(img.dataset.src, img.alt);
+        return;
+      }
+      const btn = e.target.closest("button[data-action]");
+      if (!btn) return;
+      const id = Number(btn.dataset.id);
+      if (btn.dataset.action === "add") addToCart(id);
+      if (btn.dataset.action === "about") openProductAbout(id);
+    });
+  }
+
+  if (el.routineResult) {
+    el.routineResult.addEventListener("click", function (e) {
+      const btn = e.target.closest("button[data-action='add-routine']");
+      if (!btn) return;
+      const washId = Number(btn.dataset.wash);
+      const lotionId = Number(btn.dataset.lotion);
+      addToCart(washId);
+      addToCart(lotionId);
+      openCart();
+    });
+  }
+
+  if (el.cartToggle) el.cartToggle.addEventListener("click", openCart);
+  if (el.cartClose) el.cartClose.addEventListener("click", closeCart);
+  if (el.cartBackdrop) el.cartBackdrop.addEventListener("click", closeCart);
+  
+  if (el.cartItems) {
+    el.cartItems.addEventListener("click", function (e) {
+      const btn = e.target.closest("button[data-action]");
+      if (!btn) return;
+      changeQty(Number(btn.dataset.id), btn.dataset.action);
+    });
+  }
+
+  if (el.checkout) el.checkout.addEventListener("click", checkoutOnWhatsApp);
+  if (el.clearCart) {
+    el.clearCart.addEventListener("click", function () {
+      state.cart.clear();
+      renderCart();
+      saveCartState();
+    });
+  }
+
+  if (el.prevPage) {
+    el.prevPage.addEventListener("click", function () {
+      if (state.currentPage > 1) {
+        state.currentPage -= 1;
+        renderProducts();
+        window.scrollTo({ top: el.grid.offsetTop - 120, behavior: "smooth" });
+      }
+    });
+  }
+
+  if (el.nextPage) {
+    el.nextPage.addEventListener("click", function () {
+      state.currentPage += 1;
+      renderProducts();
+      window.scrollTo({ top: el.grid.offsetTop - 120, behavior: "smooth" });
+    });
+  }
+
+  if (el.productAboutClose) el.productAboutClose.addEventListener("click", closeProductAboutModal);
+  if (el.productAboutModal) {
+    el.productAboutModal.addEventListener("click", function (e) {
+      if (e.target.classList.contains("modal-backdrop")) closeProductAboutModal();
+    });
+  }
+
+  if (el.lightboxClose) el.lightboxClose.addEventListener("click", closeLightbox);
+  if (el.lightbox) {
+    el.lightbox.addEventListener("click", function (e) {
+      if (e.target === el.lightbox) closeLightbox();
+    });
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      closeCart();
+      closeProductAboutModal();
       closeLightbox();
     }
   });
 }
-if (el.lightboxClose) {
-  el.lightboxClose.addEventListener("click", function () {
-    closeLightbox();
-  });
-}
-document.addEventListener("keydown", function (e) {
-  if (e.key !== "Escape") return;
-  if (el.lightbox && el.lightbox.classList.contains("open")) {
-    closeLightbox();
-    return;
-  }
-  if (el.productAboutModal && el.productAboutModal.classList.contains("open")) {
-    closeProductAboutModal();
+
+// Initializer
+document.addEventListener("DOMContentLoaded", function () {
+  initElements();
+  loadCartState();
+  setupHeroSlider();
+  setupRoutineFinder();
+  setupEventListeners();
+  renderProducts();
+  renderCart();
+
+  // Check URL hash for direct product opening e.g. #product-1
+  const hashMatch = String(window.location.hash || "").match(/^#product-(\d+)$/);
+  if (hashMatch) {
+    const id = Number(hashMatch[1]);
+    if (id) openProductAbout(id);
   }
 });
-
-function openProductAboutFromHash() {
-  const match = String(window.location.hash || "").match(/^#product-(\d+)$/);
-  if (!match) return;
-  const id = Number(match[1]);
-  if (!Number.isFinite(id)) return;
-  openProductAbout(id, { updateHash: false });
-}
-openProductAboutFromHash();
-window.addEventListener("hashchange", openProductAboutFromHash);
-
-
