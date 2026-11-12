@@ -228,27 +228,56 @@
       <button id="cart-close" class="icon-btn" aria-label="Close Shopping Bag">✕</button>
     </div>
 
-    <!-- Free Delivery Progress Bar -->
-    <div class="shipping-progress-box">
-      <div id="shipping-progress-text">Add products to calculate free delivery status</div>
-      <div class="progress-bar-track">
-        <div id="shipping-progress-bar" class="progress-bar-fill"></div>
+    <div class="cart-body">
+      <div id="cart-items" class="cart-items">
+        <!-- Cart items rendered by script.js -->
       </div>
-    </div>
 
-    <div id="cart-items" class="cart-items">
-      <!-- Cart items rendered by script.js -->
+      <!-- Delivery Location & Exact Address -->
+      <section id="checkout-section" class="checkout-section" aria-label="Delivery Details">
+        <div class="checkout-block">
+          <h4 class="checkout-heading">Select Your Delivery Location</h4>
+          <div class="delivery-select-wrap">
+            <select id="delivery-location" class="delivery-select" aria-label="Select your delivery location">
+              <option value="">Choose your delivery area</option>
+            </select>
+            <span class="delivery-select-caret" aria-hidden="true">▾</span>
+          </div>
+          <p id="location-error" class="field-error" hidden>Please select your delivery location.</p>
+        </div>
+
+        <div id="address-block" class="checkout-block address-block" hidden>
+          <h4 class="checkout-heading">Enter Your Exact Delivery Address</h4>
+          <textarea id="delivery-address" class="address-input" rows="2" placeholder="Enter your house number, street name, estate or nearby landmark." aria-label="Exact delivery address"></textarea>
+          <p id="address-error" class="field-error" hidden>Please enter your exact delivery address.</p>
+          <label class="checkout-heading phone-heading" for="delivery-phone">Enter Your Phone Number</label>
+          <input id="delivery-phone" class="phone-input" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 08012345678" aria-describedby="phone-error">
+          <p id="phone-error" class="field-error" hidden>Please enter your phone number.</p>
+        </div>
+      </section>
     </div>
 
     <div class="cart-foot">
-      <div class="cart-summary-row">
-        <span style="font-size:1rem; font-weight:600; color:var(--text-muted);">Estimated Total:</span>
+      <div class="summary-line">
+        <span>Product Subtotal</span>
+        <span id="summary-subtotal">₦0</span>
+      </div>
+      <div class="summary-line">
+        <span>Selected Delivery Location</span>
+        <span id="summary-location" class="is-muted">Not selected</span>
+      </div>
+      <div class="summary-line">
+        <span>Delivery Fee</span>
+        <span id="summary-delivery">₦0</span>
+      </div>
+      <div class="summary-total">
+        <span>Total Amount Payable</span>
         <span id="cart-total" class="cart-total-price">₦0</span>
       </div>
-      <button id="checkout-btn" class="btn btn-gold" style="width:100%; padding:0.85rem; font-size:1rem;">
-        Proceed to WhatsApp Express Checkout →
+      <button id="checkout-btn" class="btn btn-gold checkout-cta is-disabled" type="button" aria-disabled="true">
+        MAKE PAYMENT
       </button>
-      <button id="clear-cart" class="btn btn-outline btn-sm" style="width:100%; color:var(--text-muted);">Clear Bag</button>
+      <button id="clear-cart" class="btn btn-outline btn-sm clear-cart-btn" type="button">Clear Bag</button>
     </div>
   </aside>
 
@@ -262,6 +291,59 @@
       </div>
       <div id="product-about-body" class="modal-body">
         <!-- Rendered dynamically by script.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Manual Bank Transfer Payment Modal -->
+  <div id="payment-modal" class="modal payment-modal" aria-hidden="true">
+    <div class="modal-backdrop" data-payment-close></div>
+    <div class="modal-dialog payment-dialog" role="dialog" aria-modal="true" aria-labelledby="payment-modal-title">
+      <div class="modal-head">
+        <div>
+          <span class="section-subtitle">MANUAL BANK TRANSFER</span>
+          <h3 id="payment-modal-title" class="modal-title">Make Payment</h3>
+        </div>
+        <button id="payment-close" class="icon-btn" aria-label="Close Payment Details">✕</button>
+      </div>
+
+      <div class="modal-body payment-body">
+        <div class="payment-amount-box">
+          <span class="payment-amount-label">Amount to Pay</span>
+          <strong id="payment-amount" class="payment-amount">₦0</strong>
+        </div>
+
+        <div class="bank-card">
+          <div class="bank-line">
+            <div>
+              <span class="bank-label">Bank</span>
+              <span class="bank-value">Fidelity Bank</span>
+            </div>
+          </div>
+          <div class="bank-line">
+            <div>
+              <span class="bank-label">Account Number</span>
+              <span class="bank-value">5600042666</span>
+            </div>
+            <button class="copy-btn" type="button" data-copy="5600042666" data-copy-label="Account number">COPY ACCOUNT NUMBER</button>
+          </div>
+          <div class="bank-line">
+            <div>
+              <span class="bank-label">Account Name</span>
+              <span class="bank-value">Acavien Nig Ltd</span>
+            </div>
+            <button class="copy-btn" type="button" data-copy="Acavien Nig Ltd" data-copy-label="Account name">COPY ACCOUNT NAME</button>
+          </div>
+        </div>
+
+        <p class="payment-instruction">Please transfer the exact total amount displayed above to the Fidelity Bank account. After completing your transfer, click the button below to send your payment receipt on WhatsApp.</p>
+
+        <button id="paid-btn" class="btn btn-gold payment-cta" type="button">I HAVE MADE PAYMENT</button>
+
+        <div id="whatsapp-step" class="whatsapp-step" hidden>
+          <p>When WhatsApp opens, please attach your bank transfer receipt and send the message to complete your order.</p>
+          <button id="whatsapp-receipt-btn" class="btn btn-primary payment-cta" type="button">SEND PAYMENT RECEIPT ON WHATSAPP</button>
+        </div>
       </div>
     </div>
   </div>

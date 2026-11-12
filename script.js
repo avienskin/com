@@ -6,6 +6,50 @@ const STORE = {
   email: "acaviennigltd@gmail.com"
 };
 
+// Manual bank transfer details used by the checkout modal.
+const PAYMENT = {
+  bank: "Fidelity Bank",
+  accountNumber: "5600042666",
+  accountName: "Acavien Nig Ltd",
+  whatsapp: "2349166829138"
+};
+
+// Single source of truth for delivery areas and their fees (alphabetical A–Z).
+const DELIVERY_LOCATIONS = [
+  { area: "Abule Egba", fee: 5000 },
+  { area: "Ago Palace", fee: 4000 },
+  { area: "Ajah", fee: 6500 },
+  { area: "Awoyaya", fee: 6500 },
+  { area: "Bariga", fee: 4500 },
+  { area: "Command", fee: 4500 },
+  { area: "Egbeda", fee: 4500 },
+  { area: "Ejigbo", fee: 4000 },
+  { area: "Festac", fee: 4000 },
+  { area: "Ibeju-Lekki", fee: 6500 },
+  { area: "Ijegun", fee: 4000 },
+  { area: "Igando", fee: 3500 },
+  { area: "Ikeja", fee: 4500 },
+  { area: "Ikorodu", fee: 8000 },
+  { area: "Ikotun", fee: 4000 },
+  { area: "Ilasamaja", fee: 4000 },
+  { area: "Ipaja", fee: 5000 },
+  { area: "Isolo", fee: 4500 },
+  { area: "Iyana Ipaja", fee: 5000 },
+  { area: "Ketu", fee: 4500 },
+  { area: "Lagos Island", fee: 5500 },
+  { area: "Lakowe", fee: 6500 },
+  { area: "Lekki Phase 1", fee: 5500 },
+  { area: "Lekki Phase 2", fee: 6500 },
+  { area: "Maryland", fee: 4500 },
+  { area: "Ogba", fee: 4500 },
+  { area: "Ojo", fee: 3500 },
+  { area: "Oshodi", fee: 4500 },
+  { area: "Sangotedo", fee: 6500 },
+  { area: "Shomolu", fee: 4500 },
+  { area: "Surulere", fee: 4500 },
+  { area: "Yaba", fee: 4500 }
+].sort((a, b) => a.area.localeCompare(b.area, "en", { sensitivity: "base" }));
+
 // Web-optimized catalog using ~120KB fast-loading thumbnails for grid/scrolling,
 // and reserving high-res original images for Quick View modal and Lightbox zoom.
 const products = [
@@ -109,6 +153,7 @@ const products = [
     actives: ["Kojic Acid", "Tranexamic Acid"],
     rating: 5.0,
     reviews: 67,
+    inStock: false,
     pairId: 2,
     image: "images/glowgetter lotion.jpg",
     fullImage: "images/glowgetter lotion.jpg"
@@ -321,8 +366,11 @@ const state = {
   category: "all",
   sort: "featured",
   currentPage: 1,
-  pageSize: 12,
+  pageSize: products.length,
   cart: new Map(),
+  deliveryArea: "",
+  deliveryAddress: "",
+  deliveryPhone: "",
   activeRoutine: "brighten",
   heroIndex: 0,
   heroTimer: null,
@@ -348,8 +396,26 @@ function initElements() {
   el.cartCount = document.getElementById("cart-count");
   el.checkout = document.getElementById("checkout-btn");
   el.clearCart = document.getElementById("clear-cart");
-  el.shippingProgress = document.getElementById("shipping-progress-text");
-  el.shippingProgressBar = document.getElementById("shipping-progress-bar");
+
+  el.cartBody = document.querySelector(".cart-body");
+  el.checkoutSection = document.getElementById("checkout-section");
+  el.deliveryLocation = document.getElementById("delivery-location");
+  el.locationError = document.getElementById("location-error");
+  el.addressBlock = document.getElementById("address-block");
+  el.addressInput = document.getElementById("delivery-address");
+  el.addressError = document.getElementById("address-error");
+  el.phoneInput = document.getElementById("delivery-phone");
+  el.phoneError = document.getElementById("phone-error");
+  el.summarySubtotal = document.getElementById("summary-subtotal");
+  el.summaryLocation = document.getElementById("summary-location");
+  el.summaryDelivery = document.getElementById("summary-delivery");
+
+  el.paymentModal = document.getElementById("payment-modal");
+  el.paymentClose = document.getElementById("payment-close");
+  el.paymentAmount = document.getElementById("payment-amount");
+  el.paidBtn = document.getElementById("paid-btn");
+  el.whatsappStep = document.getElementById("whatsapp-step");
+  el.whatsappReceiptBtn = document.getElementById("whatsapp-receipt-btn");
   
   el.heroImage = document.getElementById("hero-image");
   el.heroTitle = document.getElementById("hero-title");
@@ -497,8 +563,8 @@ function renderRoutineFinder() {
     </div>
     <div class="routine-action-box">
       <div class="routine-price-tag">${formatNaira(setTotalPrice)} <span style="font-size:0.8rem; color:#A0A5AD;">(Full Routine Duo)</span></div>
-      <button class="btn btn-gold" data-action="add-routine" data-wash="${wash.id}" data-lotion="${lotion.id}">
-        Add 2-Piece Set to Cart
+      <button class="btn btn-gold" data-action="add-routine" data-wash="${wash.id}" data-lotion="${lotion.id}"${wash.inStock === false || lotion.inStock === false ? " disabled" : ""}>
+        ${wash.inStock === false || lotion.inStock === false ? "Routine Includes Out-of-Stock Item" : "Add 2-Piece Set to Cart"}
       </button>
     </div>
   `;
@@ -576,10 +642,12 @@ function renderProducts() {
 
   el.grid.innerHTML = pageItems.map(function (p) {
     const activesHtml = p.actives.map(a => `<span class="active-chip">${escapeHtml(a)}</span>`).join("");
+    const inStock = p.inStock !== false;
     return `
       <article class="card">
         <div class="card-image-wrap">
           <span class="card-badge">pH 5.5</span>
+          ${inStock ? "" : '<span class="stock-badge">Out of Stock</span>'}
           <img src="${encodeURI(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy" decoding="async" fetchpriority="low" data-action="lightbox" data-src="${encodeURI(p.fullImage || p.image)}" />
         </div>
         <div class="card-body">
@@ -595,7 +663,7 @@ function renderProducts() {
             <span class="card-price">${formatNaira(p.price)}</span>
             <div class="card-actions">
               <button class="btn btn-outline btn-sm" data-action="about" data-id="${p.id}">Quick View</button>
-              <button class="btn btn-primary btn-sm" data-action="add" data-id="${p.id}">+ Add</button>
+              <button class="btn btn-primary btn-sm" data-action="add" data-id="${p.id}"${inStock ? "" : " disabled"}>${inStock ? "+ Add" : "Out of Stock"}</button>
             </div>
           </div>
         </div>
@@ -628,30 +696,57 @@ function cartArray() {
   return Array.from(state.cart.values());
 }
 
-function updateCartCounters() {
+function getCartSubtotal() {
+  return cartArray().reduce((sum, item) => sum + (item.price * item.qty), 0);
+}
+
+function getSelectedDelivery() {
+  return DELIVERY_LOCATIONS.find(location => location.area === state.deliveryArea) || null;
+}
+
+// Product subtotal + the single selected delivery fee. Never charges delivery twice.
+function getOrderTotals() {
+  const subtotal = getCartSubtotal();
+  const delivery = getSelectedDelivery();
+  const deliveryFee = delivery ? delivery.fee : 0;
+  return { subtotal: subtotal, delivery: delivery, deliveryFee: deliveryFee, total: subtotal + deliveryFee };
+}
+
+function isCheckoutReady() {
+  return cartArray().length > 0 && Boolean(getSelectedDelivery()) && Boolean(state.deliveryAddress.trim()) && Boolean(state.deliveryPhone.trim());
+}
+
+function updateCartSummary() {
   const items = cartArray();
+  const hasItems = items.length > 0;
   const count = items.reduce((sum, item) => sum + item.qty, 0);
-  const total = items.reduce((sum, item) => sum + (item.price * item.qty), 0);
+  const totals = getOrderTotals();
 
   if (el.cartCount) el.cartCount.textContent = String(count);
-  if (el.cartTotal) el.cartTotal.textContent = formatNaira(total);
+  if (el.cartTotal) el.cartTotal.textContent = formatNaira(totals.total);
+  if (el.summarySubtotal) el.summarySubtotal.textContent = formatNaira(totals.subtotal);
+  if (el.summaryDelivery) el.summaryDelivery.textContent = formatNaira(totals.deliveryFee);
 
-  // Free Shipping Threshold (₦50,000)
-  const threshold = 50000;
-  if (el.shippingProgress && el.shippingProgressBar) {
-    if (total === 0) {
-      el.shippingProgress.textContent = "Add products to calculate free delivery status";
-      el.shippingProgressBar.style.width = "0%";
-    } else if (total >= threshold) {
-      el.shippingProgress.innerHTML = "<strong>Congratulations!</strong> You unlocked <strong>FREE Express Lagos Delivery</strong>!";
-      el.shippingProgressBar.style.width = "100%";
-    } else {
-      const remaining = threshold - total;
-      const pct = Math.min(100, Math.round((total / threshold) * 100));
-      el.shippingProgress.innerHTML = `Add <strong>${formatNaira(remaining)}</strong> more for <strong>FREE Lagos Delivery</strong>`;
-      el.shippingProgressBar.style.width = `${pct}%`;
-    }
+  if (el.summaryLocation) {
+    el.summaryLocation.textContent = totals.delivery ? totals.delivery.area : "Not selected";
+    el.summaryLocation.classList.toggle("is-muted", !totals.delivery);
   }
+
+  if (el.checkoutSection) el.checkoutSection.hidden = !hasItems;
+
+  if (el.checkoutBtn || el.checkout) {
+    const btn = el.checkout || el.checkoutBtn;
+    const ready = isCheckoutReady();
+    btn.classList.toggle("is-disabled", !ready);
+    btn.setAttribute("aria-disabled", ready ? "false" : "true");
+  }
+
+  if (el.paymentAmount) el.paymentAmount.textContent = formatNaira(totals.total);
+}
+
+function syncAddressBlock() {
+  const show = Boolean(state.deliveryArea) && cartArray().length > 0;
+  if (el.addressBlock) el.addressBlock.hidden = !show;
 }
 
 function saveCartState() {
@@ -669,7 +764,7 @@ function loadCartState() {
     if (Array.isArray(parsed)) {
       parsed.forEach(item => {
         const prod = products.find(p => p.id === item.id);
-        if (prod && item.qty > 0) {
+        if (prod && prod.inStock !== false && item.qty > 0) {
           state.cart.set(item.id, Object.assign({}, prod, { qty: item.qty }));
         }
       });
@@ -688,7 +783,8 @@ function renderCart() {
         <p style="font-size:0.85rem;">Discover our 13-piece Avien 5.5 body wash and lotion collection.</p>
       </div>
     `;
-    updateCartCounters();
+    updateCartSummary();
+    syncAddressBlock();
     return;
   }
 
@@ -704,19 +800,24 @@ function renderCart() {
           <button class="qty-btn" data-action="inc" data-id="${item.id}">+</button>
         </div>
       </div>
-      <div style="text-align:right;">
-        <div style="font-weight:700; font-family:var(--font-serif); font-size:1.1rem;">${formatNaira(item.price * item.qty)}</div>
-        <button class="remove-btn" data-action="remove" data-id="${item.id}">Remove</button>
+        <div style="text-align:right;">
+          <div style="font-weight:700; font-family:var(--font-serif); font-size:1.1rem;">${formatNaira(item.price * item.qty)}</div>
+          <button class="remove-btn" data-action="remove" data-id="${item.id}">Remove</button>
+        </div>
       </div>
-    </div>
-  `).join("");
+    `).join("");
 
-  updateCartCounters();
+  updateCartSummary();
+  syncAddressBlock();
 }
 
 function addToCart(id, qty = 1) {
   const prod = products.find(p => p.id === id);
   if (!prod) return;
+  if (prod.inStock === false) {
+    showCartToast(`${prod.name} is currently out of stock.`);
+    return;
+  }
   
   if (state.cart.has(id)) {
     state.cart.get(id).qty += qty;
@@ -752,39 +853,197 @@ function closeCart() {
   document.body.style.overflow = "";
 }
 
-function checkoutOnWhatsApp() {
-  const items = cartArray();
-  if (!items.length) {
-    alert("Your cart is currently empty. Please add items before checking out.");
-    return;
+// Delivery Location Dropdown
+function populateDeliveryOptions() {
+  if (!el.deliveryLocation) return;
+  const options = DELIVERY_LOCATIONS.map(function (location) {
+    return `<option value="${escapeHtml(location.area)}">${escapeHtml(location.area)} — ${formatNaira(location.fee)}</option>`;
+  }).join("");
+  el.deliveryLocation.innerHTML = `<option value="">Choose your delivery area</option>${options}`;
+  el.deliveryLocation.value = state.deliveryArea || "";
+}
+
+// Checkout Validation
+function clearFieldError(field, errorEl) {
+  if (errorEl) errorEl.hidden = true;
+  if (field) field.classList.remove("has-error");
+}
+
+function validateCheckout() {
+  if (!cartArray().length) {
+    showCartToast("Your bag is empty. Add a product before checkout.");
+    return false;
   }
 
-  const total = items.reduce((sum, item) => sum + (item.price * item.qty), 0);
-  const lines = [
-    `✨ *NEW ORDER - ${STORE.name.toUpperCase()}* ✨`,
-    `----------------------------------------`,
-    `Hello! I would like to place an order for the following Avien 5.5 products:`,
-    ``
-  ];
+  let valid = true;
+  const hasLocation = Boolean(getSelectedDelivery());
+  if (!hasLocation) {
+    if (el.locationError) el.locationError.hidden = false;
+    if (el.deliveryLocation) el.deliveryLocation.classList.add("has-error");
+    valid = false;
+  }
 
-  items.forEach((item, index) => {
-    lines.push(`${index + 1}. *${item.name}*`);
-    lines.push(`   • Quantity: ${item.qty}`);
-    lines.push(`   • Unit Price: ${formatNaira(item.price)}`);
-    lines.push(`   • Subtotal: ${formatNaira(item.price * item.qty)}`);
-    lines.push(`   • View Item: ${safeImageUrl(item.image)}`);
-    lines.push(``);
+  if (!state.deliveryAddress.trim()) {
+    if (el.addressBlock) el.addressBlock.hidden = false;
+    if (el.addressError) el.addressError.hidden = false;
+    if (el.addressInput) el.addressInput.classList.add("has-error");
+    valid = false;
+  }
+
+  if (!state.deliveryPhone.trim()) {
+    if (el.addressBlock) el.addressBlock.hidden = false;
+    if (el.phoneError) el.phoneError.hidden = false;
+    if (el.phoneInput) el.phoneInput.classList.add("has-error");
+    valid = false;
+  }
+
+  if (!valid) {
+    const target = !hasLocation ? el.deliveryLocation : !state.deliveryAddress.trim() ? el.addressInput : el.phoneInput;
+    if (target && target.scrollIntoView) target.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+
+  return valid;
+}
+
+// Manual Bank Transfer Payment Modal
+function openPaymentModal() {
+  if (!validateCheckout()) return;
+
+  const totals = getOrderTotals();
+  if (el.paymentAmount) el.paymentAmount.textContent = formatNaira(totals.total);
+  if (el.whatsappStep) el.whatsappStep.hidden = true;
+  if (el.paidBtn) {
+    el.paidBtn.innerHTML = "I HAVE MADE PAYMENT";
+    el.paidBtn.classList.remove("is-disabled");
+    el.paidBtn.setAttribute("aria-disabled", "false");
+  }
+
+  if (el.paymentModal) {
+    el.paymentModal.classList.add("open");
+    el.paymentModal.setAttribute("aria-hidden", "false");
+  }
+  document.body.style.overflow = "hidden";
+}
+
+function closePaymentModal() {
+  if (el.paymentModal) {
+    el.paymentModal.classList.remove("open");
+    el.paymentModal.setAttribute("aria-hidden", "true");
+  }
+  const cartOpen = el.cartPanel && el.cartPanel.classList.contains("open");
+  document.body.style.overflow = cartOpen ? "hidden" : "";
+}
+
+function confirmPaymentMade() {
+  if (!el.whatsappStep) return;
+  el.whatsappStep.hidden = false;
+  if (el.paidBtn) {
+    el.paidBtn.innerHTML = "✓ PAYMENT CONFIRMED — SEND RECEIPT BELOW";
+    el.paidBtn.classList.add("is-disabled");
+    el.paidBtn.setAttribute("aria-disabled", "true");
+  }
+  el.whatsappStep.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+
+async function copyToClipboard(text) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch (e) {}
+
+  try {
+    const helper = document.createElement("textarea");
+    helper.value = text;
+    helper.setAttribute("readonly", "");
+    helper.style.position = "fixed";
+    helper.style.top = "-1000px";
+    helper.style.opacity = "0";
+    document.body.appendChild(helper);
+    helper.select();
+    helper.setSelectionRange(0, text.length);
+    const ok = document.execCommand("copy");
+    document.body.removeChild(helper);
+    return ok;
+  } catch (e) {
+    return false;
+  }
+}
+
+function copyPaymentDetail(button) {
+  const value = button.dataset.copy;
+  const label = button.dataset.copyLabel || "Details";
+  if (!value) return;
+
+  copyToClipboard(value).then(function (ok) {
+    if (ok) {
+      const original = button.textContent;
+      button.textContent = "COPIED ✓";
+      button.classList.add("copied");
+      setTimeout(function () {
+        button.textContent = original;
+        button.classList.remove("copied");
+      }, 1800);
+      showCartToast(`${label} copied successfully.`);
+    } else {
+      showCartToast(`Please copy your ${label.toLowerCase()} manually: ${value}`);
+    }
   });
+}
 
-  lines.push(`----------------------------------------`);
-  lines.push(`💰 *TOTAL ORDER AMOUNT:* ${formatNaira(total)}`);
-  lines.push(`📍 *STORE LOCATION:* ${STORE.address}`);
-  lines.push(``);
-  lines.push(`Please confirm stock availability and send payment details for Lagos/Nigeria delivery.`);
+// Dynamic WhatsApp Receipt Message
+function buildOrderMessage() {
+  const items = cartArray();
+  const totals = getOrderTotals();
+  const lines = [];
 
-  const text = encodeURIComponent(lines.join("\n"));
-  const url = `https://wa.me/${STORE.whatsapp}?text=${text}`;
-  
+  lines.push("AVIEN SKIN — NEW CUSTOMER ORDER");
+  lines.push("");
+  lines.push("CUSTOMER ORDER DETAILS");
+  lines.push("");
+  lines.push("Products Ordered:");
+  lines.push("");
+  items.forEach(function (item, index) {
+    lines.push(`${index + 1}. ${item.name} × ${item.qty} = ${formatNaira(item.price * item.qty)}`);
+  });
+  lines.push("");
+  lines.push(`PRODUCT SUBTOTAL: ${formatNaira(totals.subtotal)}`);
+  lines.push("");
+  lines.push("DELIVERY INFORMATION:");
+  lines.push("");
+  lines.push(`Selected Delivery Location: ${totals.delivery ? totals.delivery.area : "Not selected"}`);
+  lines.push("");
+  lines.push(`Exact Delivery Address: ${state.deliveryAddress.trim()}`);
+  lines.push("");
+  lines.push(`Customer Phone Number: ${state.deliveryPhone.trim()}`);
+  lines.push("");
+  lines.push(`Delivery Fee: ${formatNaira(totals.deliveryFee)}`);
+  lines.push("");
+  lines.push(`TOTAL AMOUNT PAID: ${formatNaira(totals.total)}`);
+  lines.push("");
+  lines.push("PAYMENT DETAILS:");
+  lines.push("");
+  lines.push(`Bank: ${PAYMENT.bank}`);
+  lines.push("");
+  lines.push(`Account Number: ${PAYMENT.accountNumber}`);
+  lines.push("");
+  lines.push(`Account Name: ${PAYMENT.accountName}`);
+  lines.push("");
+  lines.push("Payment Status: Customer indicates payment has been made.");
+  lines.push("");
+  lines.push("Please find my payment receipt attached.");
+  lines.push("");
+  lines.push("Thank you.");
+
+  return lines.join("\n");
+}
+
+function sendPaymentReceiptOnWhatsApp() {
+  if (!validateCheckout()) return;
+
+  const message = buildOrderMessage();
+  const url = `https://wa.me/${PAYMENT.whatsapp}?text=${encodeURIComponent(message)}`;
   const win = window.open(url, "_blank", "noopener,noreferrer");
   if (!win) window.location.href = url;
 }
@@ -810,7 +1069,7 @@ function openProductAbout(id) {
         <p style="margin:0; font-weight:700; color:var(--gold-dark); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">${escapeHtml(prod.category)} • pH 5.5 Balanced Formula</p>
         <p style="font-family:var(--font-serif); font-size:1.6rem; font-weight:700; margin:0.3rem 0;">${formatNaira(prod.price)}</p>
         <p style="font-size:0.9rem; line-height:1.5; margin-bottom:1rem;">${escapeHtml(about.focus || '')}</p>
-        <button class="btn btn-gold" onclick="addToCart(${prod.id}); closeProductAboutModal();">Add to Bag • ${formatNaira(prod.price)}</button>
+        <button class="btn btn-gold" onclick="addToCart(${prod.id}); closeProductAboutModal();"${prod.inStock === false ? " disabled" : ""}>${prod.inStock === false ? "Out of Stock" : `Add to Bag • ${formatNaira(prod.price)}`}</button>
       </div>
     </div>
     ${about.highlighted ? `<h4>Key Active Ingredients</h4><ul>${about.highlighted.map(i => `<li>${escapeHtml(i)}</li>`).join("")}</ul>` : ''}
@@ -921,14 +1180,71 @@ function setupEventListeners() {
     });
   }
 
-  if (el.checkout) el.checkout.addEventListener("click", checkoutOnWhatsApp);
+  if (el.checkout) el.checkout.addEventListener("click", openPaymentModal);
   if (el.clearCart) {
     el.clearCart.addEventListener("click", function () {
       state.cart.clear();
+      state.deliveryArea = "";
+      state.deliveryAddress = "";
+      state.deliveryPhone = "";
+      if (el.deliveryLocation) el.deliveryLocation.value = "";
+      if (el.addressInput) el.addressInput.value = "";
+      if (el.phoneInput) el.phoneInput.value = "";
+      clearFieldError(el.deliveryLocation, el.locationError);
+      clearFieldError(el.addressInput, el.addressError);
+      clearFieldError(el.phoneInput, el.phoneError);
       renderCart();
       saveCartState();
     });
   }
+
+  if (el.deliveryLocation) {
+    el.deliveryLocation.addEventListener("change", function (e) {
+      state.deliveryArea = e.target.value;
+      clearFieldError(el.deliveryLocation, el.locationError);
+      // The exact address is intentionally preserved when the area changes.
+      syncAddressBlock();
+      updateCartSummary();
+    });
+  }
+
+  if (el.addressInput) {
+    el.addressInput.addEventListener("input", function (e) {
+      state.deliveryAddress = e.target.value;
+      if (state.deliveryAddress.trim()) clearFieldError(el.addressInput, el.addressError);
+      updateCartSummary();
+    });
+  }
+
+  if (el.phoneInput) {
+    el.phoneInput.addEventListener("input", function (e) {
+      state.deliveryPhone = e.target.value;
+      if (state.deliveryPhone.trim()) clearFieldError(el.phoneInput, el.phoneError);
+      updateCartSummary();
+    });
+  }
+
+  if (el.paymentModal) {
+    el.paymentModal.addEventListener("click", function (e) {
+      if (e.target.classList.contains("modal-backdrop")) closePaymentModal();
+    });
+  }
+  if (el.paymentClose) el.paymentClose.addEventListener("click", closePaymentModal);
+
+  if (el.paymentModal) {
+    el.paymentModal.querySelectorAll("[data-copy]").forEach(function (btn) {
+      btn.addEventListener("click", function () { copyPaymentDetail(btn); });
+    });
+  }
+
+  if (el.paidBtn) {
+    el.paidBtn.addEventListener("click", function () {
+      if (el.paidBtn.classList.contains("is-disabled")) return;
+      confirmPaymentMade();
+    });
+  }
+
+  if (el.whatsappReceiptBtn) el.whatsappReceiptBtn.addEventListener("click", sendPaymentReceiptOnWhatsApp);
 
   if (el.prevPage) {
     el.prevPage.addEventListener("click", function () {
@@ -964,6 +1280,7 @@ function setupEventListeners() {
 
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
+      closePaymentModal();
       closeCart();
       closeProductAboutModal();
       closeLightbox();
@@ -978,6 +1295,7 @@ document.addEventListener("DOMContentLoaded", function () {
   setupHeroSlider();
   setupRoutineFinder();
   setupEventListeners();
+  populateDeliveryOptions();
   renderProducts();
   renderCart();
 
