@@ -6,13 +6,54 @@ const STORE = {
   email: "acaviennigltd@gmail.com"
 };
 
-// Manual bank transfer details used by the checkout modal.
+// Manual bank transfer details used by the Lagos checkout modal.
 const PAYMENT = {
   bank: "Fidelity Bank",
   accountNumber: "5600042666",
   accountName: "Acavien Nig Ltd",
-  whatsapp: "2349166829138"
+  whatsapp: "2348142526229"
 };
+
+// All 36 Nigerian states plus the Federal Capital Territory, alphabetically ordered.
+const NIGERIAN_STATES = [
+  "Abia",
+  "Adamawa",
+  "Akwa Ibom",
+  "Anambra",
+  "Bauchi",
+  "Bayelsa",
+  "Benue",
+  "Borno",
+  "Cross River",
+  "Delta",
+  "Ebonyi",
+  "Edo",
+  "Ekiti",
+  "Enugu",
+  "Federal Capital Territory (FCT)",
+  "Gombe",
+  "Imo",
+  "Jigawa",
+  "Kaduna",
+  "Kano",
+  "Katsina",
+  "Kebbi",
+  "Kogi",
+  "Kwara",
+  "Lagos",
+  "Nasarawa",
+  "Niger",
+  "Ogun",
+  "Ondo",
+  "Osun",
+  "Oyo",
+  "Plateau",
+  "Rivers",
+  "Sokoto",
+  "Taraba",
+  "Yobe",
+  "Zamfara"
+];
 
 // Single source of truth for delivery areas and their fees (alphabetical A–Z).
 const DELIVERY_LOCATIONS = [
@@ -368,9 +409,14 @@ const state = {
   currentPage: 1,
   pageSize: products.length,
   cart: new Map(),
+  selectedState: "",
+  customerName: "",
   deliveryArea: "",
   deliveryAddress: "",
   deliveryPhone: "",
+  nonLagosCity: "",
+  nonLagosAddress: "",
+  nonLagosLandmark: "",
   activeRoutine: "brighten",
   heroIndex: 0,
   heroTimer: null,
@@ -399,13 +445,43 @@ function initElements() {
 
   el.cartBody = document.querySelector(".cart-body");
   el.checkoutSection = document.getElementById("checkout-section");
+
+  // State selection
+  el.stateSelect = document.getElementById("state-select");
+  el.stateError = document.getElementById("state-error");
+
+  // Shared customer details
+  el.customerBlock = document.getElementById("customer-block");
+  el.customerName = document.getElementById("customer-name");
+  el.nameError = document.getElementById("name-error");
+  el.phoneInput = document.getElementById("delivery-phone");
+  el.phoneError = document.getElementById("phone-error");
+
+  // Lagos route
+  el.lagosRoute = document.getElementById("lagos-route");
   el.deliveryLocation = document.getElementById("delivery-location");
   el.locationError = document.getElementById("location-error");
   el.addressBlock = document.getElementById("address-block");
   el.addressInput = document.getElementById("delivery-address");
   el.addressError = document.getElementById("address-error");
-  el.phoneInput = document.getElementById("delivery-phone");
-  el.phoneError = document.getElementById("phone-error");
+
+  // Non-Lagos route
+  el.nonLagosRoute = document.getElementById("non-lagos-route");
+  el.nonLagosStateLabel = document.getElementById("non-lagos-state-label");
+  el.nonLagosCity = document.getElementById("non-lagos-city");
+  el.cityError = document.getElementById("city-error");
+  el.nonLagosAddress = document.getElementById("non-lagos-address");
+  el.nonAddressError = document.getElementById("non-address-error");
+  el.nonLagosLandmark = document.getElementById("non-lagos-landmark");
+  el.nonLagosWhatsapp = document.getElementById("non-lagos-whatsapp-btn");
+
+  // Summaries
+  el.summaryPlaceholder = document.getElementById("summary-placeholder");
+  el.lagosSummary = document.getElementById("lagos-summary");
+  el.lagosSubtotal = document.getElementById("lagos-subtotal");
+  el.nonLagosSummary = document.getElementById("non-lagos-summary");
+  el.nonLagosSubtotal = document.getElementById("non-lagos-subtotal");
+  el.nonLagosSummaryState = document.getElementById("non-lagos-summary-state");
   el.summarySubtotal = document.getElementById("summary-subtotal");
   el.summaryLocation = document.getElementById("summary-location");
   el.summaryDelivery = document.getElementById("summary-delivery");
@@ -700,11 +776,17 @@ function getCartSubtotal() {
   return cartArray().reduce((sum, item) => sum + (item.price * item.qty), 0);
 }
 
+function isLagosSelected() {
+  return state.selectedState === "Lagos";
+}
+
+// The Lagos delivery fee only ever exists while Lagos is the selected state.
 function getSelectedDelivery() {
+  if (!isLagosSelected()) return null;
   return DELIVERY_LOCATIONS.find(location => location.area === state.deliveryArea) || null;
 }
 
-// Product subtotal + the single selected delivery fee. Never charges delivery twice.
+// Product subtotal + the single selected Lagos delivery fee. Never charges delivery twice.
 function getOrderTotals() {
   const subtotal = getCartSubtotal();
   const delivery = getSelectedDelivery();
@@ -713,40 +795,77 @@ function getOrderTotals() {
 }
 
 function isCheckoutReady() {
-  return cartArray().length > 0 && Boolean(getSelectedDelivery()) && Boolean(state.deliveryAddress.trim()) && Boolean(state.deliveryPhone.trim());
+  if (!cartArray().length || !state.selectedState) return false;
+  if (!state.customerName.trim() || !state.deliveryPhone.trim()) return false;
+  if (isLagosSelected()) {
+    return Boolean(getSelectedDelivery()) && Boolean(state.deliveryAddress.trim());
+  }
+  return Boolean(state.nonLagosCity.trim()) && Boolean(state.nonLagosAddress.trim());
+}
+
+// Shows exactly one checkout route: nothing before a state is picked, the Lagos flow for
+// Lagos, and the delivery-details flow for every other state (FCT included).
+function syncCheckoutVisibility() {
+  const hasItems = cartArray().length > 0;
+  const hasState = Boolean(state.selectedState);
+  const lagos = isLagosSelected();
+
+  if (el.checkoutSection) el.checkoutSection.hidden = !hasItems;
+  if (el.summaryPlaceholder) el.summaryPlaceholder.hidden = !hasItems || hasState;
+  if (el.lagosSummary) el.lagosSummary.hidden = !hasItems || !hasState || !lagos;
+  if (el.nonLagosSummary) el.nonLagosSummary.hidden = !hasItems || !hasState || lagos;
+
+  if (el.customerBlock) el.customerBlock.hidden = !hasState;
+  if (el.lagosRoute) el.lagosRoute.hidden = !hasState || !lagos;
+  if (el.nonLagosRoute) el.nonLagosRoute.hidden = !hasState || lagos;
+  if (el.addressBlock) el.addressBlock.hidden = !(hasState && lagos && Boolean(state.deliveryArea));
+
+  if (el.checkout) el.checkout.hidden = !hasItems || !hasState || !lagos;
+  if (el.nonLagosWhatsapp) el.nonLagosWhatsapp.hidden = !hasItems || !hasState || lagos;
+
+  if (el.nonLagosStateLabel) el.nonLagosStateLabel.textContent = hasState ? state.selectedState : "—";
+  if (el.nonLagosSummaryState) el.nonLagosSummaryState.textContent = hasState ? state.selectedState : "—";
 }
 
 function updateCartSummary() {
   const items = cartArray();
-  const hasItems = items.length > 0;
   const count = items.reduce((sum, item) => sum + item.qty, 0);
   const totals = getOrderTotals();
 
   if (el.cartCount) el.cartCount.textContent = String(count);
-  if (el.cartTotal) el.cartTotal.textContent = formatNaira(totals.total);
   if (el.summarySubtotal) el.summarySubtotal.textContent = formatNaira(totals.subtotal);
+  if (el.lagosSubtotal) el.lagosSubtotal.textContent = formatNaira(totals.subtotal);
+  if (el.nonLagosSubtotal) el.nonLagosSubtotal.textContent = formatNaira(totals.subtotal);
+  if (el.cartTotal) el.cartTotal.textContent = formatNaira(totals.total);
   if (el.summaryDelivery) el.summaryDelivery.textContent = formatNaira(totals.deliveryFee);
 
   if (el.summaryLocation) {
-    el.summaryLocation.textContent = totals.delivery ? totals.delivery.area : "Not selected";
+    el.summaryLocation.textContent = totals.delivery
+      ? `${totals.delivery.area} — ${formatNaira(totals.delivery.fee)}`
+      : "Not selected";
     el.summaryLocation.classList.toggle("is-muted", !totals.delivery);
   }
 
-  if (el.checkoutSection) el.checkoutSection.hidden = !hasItems;
-
-  if (el.checkoutBtn || el.checkout) {
-    const btn = el.checkout || el.checkoutBtn;
-    const ready = isCheckoutReady();
+  const ready = isCheckoutReady();
+  [el.checkout, el.nonLagosWhatsapp].forEach(function (btn) {
+    if (!btn) return;
     btn.classList.toggle("is-disabled", !ready);
     btn.setAttribute("aria-disabled", ready ? "false" : "true");
-  }
+  });
 
   if (el.paymentAmount) el.paymentAmount.textContent = formatNaira(totals.total);
+
+  syncCheckoutVisibility();
 }
 
-function syncAddressBlock() {
-  const show = Boolean(state.deliveryArea) && cartArray().length > 0;
-  if (el.addressBlock) el.addressBlock.hidden = !show;
+// State dropdown: all 36 states plus the FCT, alphabetically.
+function populateStateOptions() {
+  if (!el.stateSelect) return;
+  const options = NIGERIAN_STATES.map(function (name) {
+    return `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`;
+  }).join("");
+  el.stateSelect.innerHTML = `<option value="">Choose your state</option>${options}`;
+  el.stateSelect.value = state.selectedState || "";
 }
 
 function saveCartState() {
@@ -784,7 +903,6 @@ function renderCart() {
       </div>
     `;
     updateCartSummary();
-    syncAddressBlock();
     return;
   }
 
@@ -808,7 +926,6 @@ function renderCart() {
     `).join("");
 
   updateCartSummary();
-  syncAddressBlock();
 }
 
 function addToCart(id, qty = 1) {
@@ -842,15 +959,56 @@ function changeQty(id, action) {
 }
 
 function openCart() {
-  if (el.cartPanel) el.cartPanel.classList.add("open");
+  if (el.cartPanel) {
+    el.cartPanel.classList.add("open");
+    el.cartPanel.setAttribute("aria-hidden", "false");
+  }
   if (el.cartBackdrop) el.cartBackdrop.classList.add("open");
   document.body.style.overflow = "hidden";
+  applyCartViewport();
 }
 
 function closeCart() {
-  if (el.cartPanel) el.cartPanel.classList.remove("open");
+  // Release any focused field before the drawer is hidden from assistive technology.
+  if (document.activeElement && el.cartPanel && el.cartPanel.contains(document.activeElement)) {
+    document.activeElement.blur();
+  }
+  if (el.cartPanel) {
+    el.cartPanel.classList.remove("open");
+    el.cartPanel.setAttribute("aria-hidden", "true");
+  }
   if (el.cartBackdrop) el.cartBackdrop.classList.remove("open");
   document.body.style.overflow = "";
+  // Drop temporary inline viewport sizing used for the mobile keyboard.
+  resetCartViewport();
+}
+
+// Lightweight visualViewport handler so the drawer (and its final buttons) stay inside
+// the visible area while the mobile keyboard is open. CSS alone cannot track that.
+function applyCartViewport() {
+  if (!el.cartPanel || !el.cartPanel.classList.contains("open")) return;
+  const vv = window.visualViewport;
+  if (!vv) return;
+  el.cartPanel.style.height = vv.height + "px";
+  el.cartPanel.style.top = vv.offsetTop + "px";
+  el.cartPanel.style.bottom = "auto";
+}
+
+function resetCartViewport() {
+  if (!el.cartPanel) return;
+  el.cartPanel.style.removeProperty("height");
+  el.cartPanel.style.removeProperty("top");
+  el.cartPanel.style.removeProperty("bottom");
+}
+
+function setupViewportHandling() {
+  const handler = function () { applyCartViewport(); };
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", handler);
+    window.visualViewport.addEventListener("scroll", handler);
+  }
+  window.addEventListener("resize", handler);
+  window.addEventListener("orientationchange", handler);
 }
 
 // Delivery Location Dropdown
@@ -869,45 +1027,51 @@ function clearFieldError(field, errorEl) {
   if (field) field.classList.remove("has-error");
 }
 
-function validateCheckout() {
+function validateCheckout(route) {
   if (!cartArray().length) {
     showCartToast("Your bag is empty. Add a product before checkout.");
     return false;
   }
 
-  let valid = true;
-  const hasLocation = Boolean(getSelectedDelivery());
-  if (!hasLocation) {
-    if (el.locationError) el.locationError.hidden = false;
-    if (el.deliveryLocation) el.deliveryLocation.classList.add("has-error");
-    valid = false;
+  const lagos = route === "lagos";
+  let firstInvalid = null;
+
+  function fail(field, errorEl) {
+    if (errorEl) errorEl.hidden = false;
+    if (field) field.classList.add("has-error");
+    if (!firstInvalid && field) firstInvalid = field;
   }
 
-  if (!state.deliveryAddress.trim()) {
-    if (el.addressBlock) el.addressBlock.hidden = false;
-    if (el.addressError) el.addressError.hidden = false;
-    if (el.addressInput) el.addressInput.classList.add("has-error");
-    valid = false;
+  if (!state.selectedState) {
+    if (el.stateError) el.stateError.hidden = false;
+    if (el.stateSelect) el.stateSelect.classList.add("has-error");
+    if (!firstInvalid) firstInvalid = el.stateSelect;
   }
 
-  if (!state.deliveryPhone.trim()) {
-    if (el.addressBlock) el.addressBlock.hidden = false;
-    if (el.phoneError) el.phoneError.hidden = false;
-    if (el.phoneInput) el.phoneInput.classList.add("has-error");
-    valid = false;
+  if (!state.customerName.trim()) fail(el.customerName, el.nameError);
+  if (!state.deliveryPhone.trim()) fail(el.phoneInput, el.phoneError);
+
+  if (lagos) {
+    if (state.selectedState && !getSelectedDelivery()) fail(el.deliveryLocation, el.locationError);
+    if (state.selectedState && !state.deliveryAddress.trim()) fail(el.addressInput, el.addressError);
+  } else {
+    if (state.selectedState && !state.nonLagosCity.trim()) fail(el.nonLagosCity, el.cityError);
+    if (state.selectedState && !state.nonLagosAddress.trim()) fail(el.nonLagosAddress, el.nonAddressError);
   }
 
-  if (!valid) {
-    const target = !hasLocation ? el.deliveryLocation : !state.deliveryAddress.trim() ? el.addressInput : el.phoneInput;
-    if (target && target.scrollIntoView) target.scrollIntoView({ block: "center", behavior: "smooth" });
+  if (firstInvalid) {
+    syncCheckoutVisibility();
+    if (firstInvalid.scrollIntoView) firstInvalid.scrollIntoView({ block: "center", behavior: "smooth" });
+    return false;
   }
 
-  return valid;
+  return true;
 }
 
 // Manual Bank Transfer Payment Modal
 function openPaymentModal() {
-  if (!validateCheckout()) return;
+  // The Fidelity Bank flow belongs to Lagos only.
+  if (!isLagosSelected() || !validateCheckout("lagos")) return;
 
   const totals = getOrderTotals();
   if (el.paymentAmount) el.paymentAmount.textContent = formatNaira(totals.total);
@@ -992,60 +1156,121 @@ function copyPaymentDetail(button) {
   });
 }
 
-// Dynamic WhatsApp Receipt Message
-function buildOrderMessage() {
-  const items = cartArray();
-  const totals = getOrderTotals();
-  const lines = [];
+// Dynamic WhatsApp order messages — built from the real bag and customer details.
+function buildProductLines() {
+  return cartArray().map(function (item, index) {
+    return [
+      `${index + 1}. ${item.name} × ${item.qty}`,
+      `   Unit Price: ${formatNaira(item.price)}`,
+      `   Subtotal: ${formatNaira(item.price * item.qty)}`
+    ].join("\n");
+  }).join("\n\n");
+}
 
-  lines.push("AVIEN SKIN — NEW CUSTOMER ORDER");
+function buildCustomerBlock() {
+  return [
+    "CUSTOMER DETAILS:",
+    "",
+    `Customer Name: ${state.customerName.trim()}`,
+    "",
+    `Customer Phone Number: ${state.deliveryPhone.trim()}`
+  ].join("\n");
+}
+
+function buildLagosOrderMessage() {
+  const totals = getOrderTotals();
+
+  return [
+    "AVIEN SKIN — NEW CUSTOMER ORDER",
+    "",
+    buildCustomerBlock(),
+    "",
+    "PRODUCTS ORDERED:",
+    "",
+    buildProductLines(),
+    "",
+    `PRODUCT SUBTOTAL: ${formatNaira(totals.subtotal)}`,
+    "",
+    "DELIVERY INFORMATION:",
+    "",
+    "Selected State: Lagos",
+    "",
+    `Delivery Location: ${totals.delivery ? totals.delivery.area : "Not selected"}`,
+    "",
+    `Exact Delivery Address: ${state.deliveryAddress.trim()}`,
+    "",
+    `DELIVERY FEE: ${formatNaira(totals.deliveryFee)}`,
+    "",
+    `TOTAL AMOUNT PAYABLE: ${formatNaira(totals.total)}`,
+    "",
+    "PAYMENT DETAILS:",
+    "",
+    `Bank: ${PAYMENT.bank}`,
+    "",
+    `Account Number: ${PAYMENT.accountNumber}`,
+    "",
+    `Account Name: ${PAYMENT.accountName}`,
+    "",
+    "Payment Status: Customer indicates payment has been made.",
+    "",
+    "Please find my payment receipt attached.",
+    "",
+    "Thank you for shopping with Avien Skin."
+  ].join("\n");
+}
+
+function buildNonLagosOrderMessage() {
+  const totals = getOrderTotals();
+  const landmark = state.nonLagosLandmark.trim();
+  const lines = [
+    "AVIEN SKIN — NEW CUSTOMER ORDER",
+    "",
+    buildCustomerBlock(),
+    "",
+    "PRODUCTS ORDERED:",
+    "",
+    buildProductLines(),
+    "",
+    `PRODUCT SUBTOTAL: ${formatNaira(totals.subtotal)}`,
+    "",
+    "DELIVERY INFORMATION:",
+    "",
+    `Selected State: ${state.selectedState}`,
+    "",
+    `City/LGA: ${state.nonLagosCity.trim()}`,
+    "",
+    `Exact Delivery Address: ${state.nonLagosAddress.trim()}`
+  ];
+
+  if (landmark) {
+    lines.push("");
+    lines.push(`Nearby Landmark: ${landmark}`);
+  }
+
   lines.push("");
-  lines.push("CUSTOMER ORDER DETAILS");
+  lines.push("DELIVERY FEE: To be confirmed by Acavien Nig Ltd.");
   lines.push("");
-  lines.push("Products Ordered:");
+  lines.push("PAYMENT: Delivery charges and payment account details will be provided by our customer service team on WhatsApp.");
   lines.push("");
-  items.forEach(function (item, index) {
-    lines.push(`${index + 1}. ${item.name} × ${item.qty} = ${formatNaira(item.price * item.qty)}`);
-  });
-  lines.push("");
-  lines.push(`PRODUCT SUBTOTAL: ${formatNaira(totals.subtotal)}`);
-  lines.push("");
-  lines.push("DELIVERY INFORMATION:");
-  lines.push("");
-  lines.push(`Selected Delivery Location: ${totals.delivery ? totals.delivery.area : "Not selected"}`);
-  lines.push("");
-  lines.push(`Exact Delivery Address: ${state.deliveryAddress.trim()}`);
-  lines.push("");
-  lines.push(`Customer Phone Number: ${state.deliveryPhone.trim()}`);
-  lines.push("");
-  lines.push(`Delivery Fee: ${formatNaira(totals.deliveryFee)}`);
-  lines.push("");
-  lines.push(`TOTAL AMOUNT PAID: ${formatNaira(totals.total)}`);
-  lines.push("");
-  lines.push("PAYMENT DETAILS:");
-  lines.push("");
-  lines.push(`Bank: ${PAYMENT.bank}`);
-  lines.push("");
-  lines.push(`Account Number: ${PAYMENT.accountNumber}`);
-  lines.push("");
-  lines.push(`Account Name: ${PAYMENT.accountName}`);
-  lines.push("");
-  lines.push("Payment Status: Customer indicates payment has been made.");
-  lines.push("");
-  lines.push("Please find my payment receipt attached.");
-  lines.push("");
-  lines.push("Thank you.");
+  lines.push("Thank you for shopping with Avien Skin.");
 
   return lines.join("\n");
 }
 
-function sendPaymentReceiptOnWhatsApp() {
-  if (!validateCheckout()) return;
-
-  const message = buildOrderMessage();
-  const url = `https://wa.me/${PAYMENT.whatsapp}?text=${encodeURIComponent(message)}`;
+function openWhatsApp(message) {
+  const url = `https://wa.me/${STORE.whatsapp}?text=${encodeURIComponent(message)}`;
   const win = window.open(url, "_blank", "noopener,noreferrer");
   if (!win) window.location.href = url;
+}
+
+function sendPaymentReceiptOnWhatsApp() {
+  if (!isLagosSelected() || !validateCheckout("lagos")) return;
+  openWhatsApp(buildLagosOrderMessage());
+}
+
+function sendNonLagosOrder() {
+  if (isLagosSelected() || !validateCheckout("non-lagos")) return;
+  openWhatsApp(buildNonLagosOrderMessage());
 }
 
 // Modals & Lightbox
@@ -1181,20 +1406,69 @@ function setupEventListeners() {
   }
 
   if (el.checkout) el.checkout.addEventListener("click", openPaymentModal);
+  if (el.nonLagosWhatsapp) el.nonLagosWhatsapp.addEventListener("click", sendNonLagosOrder);
+
   if (el.clearCart) {
     el.clearCart.addEventListener("click", function () {
       state.cart.clear();
+      state.selectedState = "";
+      state.customerName = "";
       state.deliveryArea = "";
       state.deliveryAddress = "";
       state.deliveryPhone = "";
+      state.nonLagosCity = "";
+      state.nonLagosAddress = "";
+      state.nonLagosLandmark = "";
+      if (el.stateSelect) el.stateSelect.value = "";
+      if (el.customerName) el.customerName.value = "";
       if (el.deliveryLocation) el.deliveryLocation.value = "";
       if (el.addressInput) el.addressInput.value = "";
       if (el.phoneInput) el.phoneInput.value = "";
+      if (el.nonLagosCity) el.nonLagosCity.value = "";
+      if (el.nonLagosAddress) el.nonLagosAddress.value = "";
+      if (el.nonLagosLandmark) el.nonLagosLandmark.value = "";
+      clearFieldError(el.stateSelect, el.stateError);
+      clearFieldError(el.customerName, el.nameError);
       clearFieldError(el.deliveryLocation, el.locationError);
       clearFieldError(el.addressInput, el.addressError);
       clearFieldError(el.phoneInput, el.phoneError);
+      clearFieldError(el.nonLagosCity, el.cityError);
+      clearFieldError(el.nonLagosAddress, el.nonAddressError);
       renderCart();
       saveCartState();
+    });
+  }
+
+  // State switching: exactly one route stays active, and no Lagos fee survives the switch.
+  if (el.stateSelect) {
+    el.stateSelect.addEventListener("change", function (e) {
+      const nextState = e.target.value;
+      const wasLagos = isLagosSelected();
+      state.selectedState = nextState;
+
+      clearFieldError(el.stateSelect, el.stateError);
+      clearFieldError(el.deliveryLocation, el.locationError);
+      clearFieldError(el.addressInput, el.addressError);
+      clearFieldError(el.nonLagosCity, el.cityError);
+      clearFieldError(el.nonLagosAddress, el.nonAddressError);
+
+      if (wasLagos && nextState !== "Lagos") {
+        // Drop the Lagos area so its fee cannot linger on a non-Lagos order.
+        state.deliveryArea = "";
+        if (el.deliveryLocation) el.deliveryLocation.value = "";
+      }
+
+      if (nextState !== "Lagos") closePaymentModal();
+
+      updateCartSummary();
+    });
+  }
+
+  if (el.customerName) {
+    el.customerName.addEventListener("input", function (e) {
+      state.customerName = e.target.value;
+      if (state.customerName.trim()) clearFieldError(el.customerName, el.nameError);
+      updateCartSummary();
     });
   }
 
@@ -1202,8 +1476,30 @@ function setupEventListeners() {
     el.deliveryLocation.addEventListener("change", function (e) {
       state.deliveryArea = e.target.value;
       clearFieldError(el.deliveryLocation, el.locationError);
-      // The exact address is intentionally preserved when the area changes.
-      syncAddressBlock();
+      // The exact address is intentionally preserved when the Lagos area changes.
+      updateCartSummary();
+    });
+  }
+
+  if (el.nonLagosCity) {
+    el.nonLagosCity.addEventListener("input", function (e) {
+      state.nonLagosCity = e.target.value;
+      if (state.nonLagosCity.trim()) clearFieldError(el.nonLagosCity, el.cityError);
+      updateCartSummary();
+    });
+  }
+
+  if (el.nonLagosAddress) {
+    el.nonLagosAddress.addEventListener("input", function (e) {
+      state.nonLagosAddress = e.target.value;
+      if (state.nonLagosAddress.trim()) clearFieldError(el.nonLagosAddress, el.nonAddressError);
+      updateCartSummary();
+    });
+  }
+
+  if (el.nonLagosLandmark) {
+    el.nonLagosLandmark.addEventListener("input", function (e) {
+      state.nonLagosLandmark = e.target.value;
       updateCartSummary();
     });
   }
@@ -1295,7 +1591,9 @@ document.addEventListener("DOMContentLoaded", function () {
   setupHeroSlider();
   setupRoutineFinder();
   setupEventListeners();
+  populateStateOptions();
   populateDeliveryOptions();
+  setupViewportHandling();
   renderProducts();
   renderCart();
 

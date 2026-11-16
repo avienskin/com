@@ -901,7 +901,12 @@ main {
   position: fixed;
   inset: 0 0 0 auto;
   width: min(100vw, 440px);
+  /* Keep the drawer inside the visible viewport on mobile browsers. */
   height: 100vh;
+  height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow: hidden;
   background: var(--surface);
   box-shadow: var(--shadow-lg);
   z-index: 1000;
@@ -939,6 +944,7 @@ main {
   align-items: center;
   justify-content: space-between;
   background: var(--bg);
+  flex: 0 0 auto;
 }
 
 .cart-head h3 {
@@ -970,11 +976,14 @@ main {
   background: var(--surface);
 }
 
-/* Scrollable cart body (items + delivery details) */
+/* Scrollable cart body (items + delivery details). min-height:0 lets it shrink so the
+   footer stays inside the viewport instead of being pushed below it. */
 .cart-body {
-  flex: 1;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
 }
@@ -1129,6 +1138,57 @@ main {
   display: none;
 }
 
+.field-label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.optional-tag {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--gold-dark);
+}
+
+.checkout-route[hidden],
+#customer-block[hidden] {
+  display: none;
+}
+
+.checkout-route {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.route-state-line {
+  margin: 0 0 1rem;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+.route-state-line strong {
+  color: var(--surface-dark);
+}
+
+.route-note {
+  margin: 1.1rem 0 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line-gold);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--radius-sm);
+  background: var(--gold-light);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
 .cart-item {
   display: flex;
   gap: 1rem;
@@ -1210,13 +1270,31 @@ main {
 }
 
 .cart-foot {
-  padding: 1.2rem 1.6rem 1.4rem;
+  flex: 0 0 auto;
+  padding: 1.2rem 1.6rem calc(1.4rem + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--line-gold);
   background: var(--bg);
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
   box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.03);
+}
+
+.summary-group[hidden] {
+  display: none;
+}
+
+.summary-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.summary-hint {
+  margin: 0.2rem 0 0;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: var(--text-muted);
 }
 
 .summary-line {
@@ -1271,10 +1349,17 @@ main {
 
 .checkout-cta {
   width: 100%;
+  min-height: 48px;
   margin-top: 0.7rem;
+  margin-bottom: 0.2rem;
   padding: 0.9rem;
   font-size: 0.92rem;
   letter-spacing: 0.08em;
+  flex-shrink: 0;
+}
+
+.checkout-cta[hidden] {
+  display: none;
 }
 
 .checkout-cta.is-disabled {
@@ -1762,12 +1847,63 @@ main {
     min-height: 380px;
   }
 
+  /* Keep the announcement ribbon inside narrow viewports (no horizontal scroll). */
+  .top-ribbon {
+    flex-wrap: wrap;
+    gap: 0.35rem 0.9rem;
+    font-size: 0.68rem;
+  }
+
+  .cart-panel {
+    width: 100vw;
+  }
+
   .cart-head,
   .cart-items,
   .checkout-section,
   .cart-foot {
     padding-left: 1.15rem;
     padding-right: 1.15rem;
+  }
+
+  .cart-head {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .cart-head h3 {
+    font-size: 1.2rem;
+  }
+
+  .cart-foot {
+    gap: 0.3rem;
+    padding-top: 0.9rem;
+    padding-bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* 16px inputs prevent iOS Safari from zooming and clipping the checkout fields. */
+  .delivery-select,
+  .address-input,
+  .phone-input {
+    font-size: 16px;
+  }
+
+  .checkout-cta {
+    min-height: 52px;
+    margin-top: 0.55rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .summary-line {
+    font-size: 0.8rem;
+  }
+
+  .cart-total-price {
+    font-size: 1.4rem;
+  }
+
+  .clear-cart-btn {
+    margin-top: 0.1rem;
   }
 
   .modal-dialog.payment-dialog {

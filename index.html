@@ -233,49 +233,125 @@
         <!-- Cart items rendered by script.js -->
       </div>
 
-      <!-- Delivery Location & Exact Address -->
-      <section id="checkout-section" class="checkout-section" aria-label="Delivery Details">
+      <!-- State-Based Checkout: State → Customer Details → Route-specific Delivery -->
+      <section id="checkout-section" class="checkout-section" aria-label="Delivery Details" hidden>
+        <!-- Step 1: State selection -->
         <div class="checkout-block">
-          <h4 class="checkout-heading">Select Your Delivery Location</h4>
+          <h4 class="checkout-heading">Select Your State</h4>
           <div class="delivery-select-wrap">
-            <select id="delivery-location" class="delivery-select" aria-label="Select your delivery location">
-              <option value="">Choose your delivery area</option>
+            <select id="state-select" class="delivery-select" aria-label="Select your state">
+              <option value="">Choose your state</option>
             </select>
             <span class="delivery-select-caret" aria-hidden="true">▾</span>
           </div>
-          <p id="location-error" class="field-error" hidden>Please select your delivery location.</p>
+          <p id="state-error" class="field-error" hidden>Please select your state.</p>
         </div>
 
-        <div id="address-block" class="checkout-block address-block" hidden>
-          <h4 class="checkout-heading">Enter Your Exact Delivery Address</h4>
-          <textarea id="delivery-address" class="address-input" rows="2" placeholder="Enter your house number, street name, estate or nearby landmark." aria-label="Exact delivery address"></textarea>
-          <p id="address-error" class="field-error" hidden>Please enter your exact delivery address.</p>
-          <label class="checkout-heading phone-heading" for="delivery-phone">Enter Your Phone Number</label>
+        <!-- Customer details (shared by both checkout routes) -->
+        <div id="customer-block" class="checkout-block" hidden>
+          <h4 class="checkout-heading">Enter Your Details</h4>
+
+          <label class="field-label" for="customer-name">Customer Name</label>
+          <input id="customer-name" class="phone-input" type="text" autocomplete="name" placeholder="Enter your full name" aria-describedby="name-error">
+          <p id="name-error" class="field-error" hidden>Please enter your name.</p>
+
+          <label class="field-label phone-heading" for="delivery-phone">Customer Phone Number</label>
           <input id="delivery-phone" class="phone-input" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 08012345678" aria-describedby="phone-error">
           <p id="phone-error" class="field-error" hidden>Please enter your phone number.</p>
+        </div>
+
+        <!-- Lagos route only -->
+        <div id="lagos-route" class="checkout-route" hidden>
+          <div class="checkout-block">
+            <h4 class="checkout-heading">Lagos Delivery Location</h4>
+            <div class="delivery-select-wrap">
+              <select id="delivery-location" class="delivery-select" aria-label="Select your Lagos delivery location">
+                <option value="">Choose your delivery area</option>
+              </select>
+              <span class="delivery-select-caret" aria-hidden="true">▾</span>
+            </div>
+            <p id="location-error" class="field-error" hidden>Please select your delivery location.</p>
+          </div>
+
+          <div id="address-block" class="checkout-block address-block" hidden>
+            <h4 class="checkout-heading">Enter Your Exact Delivery Address</h4>
+            <textarea id="delivery-address" class="address-input" rows="2" placeholder="Enter your house number, street name, estate or nearby landmark." aria-label="Exact delivery address"></textarea>
+            <p id="address-error" class="field-error" hidden>Please enter your exact delivery address.</p>
+          </div>
+        </div>
+
+        <!-- Every other state, including the FCT -->
+        <div id="non-lagos-route" class="checkout-route" hidden>
+          <div class="checkout-block">
+            <h4 class="checkout-heading">Delivery Details</h4>
+            <p class="route-state-line">Selected State: <strong id="non-lagos-state-label">—</strong></p>
+
+            <label class="field-label" for="non-lagos-city">City or Local Government Area</label>
+            <input id="non-lagos-city" class="phone-input" type="text" autocomplete="address-level2" placeholder="Enter your city or local government area" aria-describedby="city-error">
+            <p id="city-error" class="field-error" hidden>Please enter your city or local government area.</p>
+
+            <label class="field-label phone-heading" for="non-lagos-address">Exact Delivery Address</label>
+            <textarea id="non-lagos-address" class="address-input" rows="2" placeholder="Enter your house number, street name, estate or delivery address" aria-describedby="non-address-error"></textarea>
+            <p id="non-address-error" class="field-error" hidden>Please enter your exact delivery address.</p>
+
+            <label class="field-label phone-heading" for="non-lagos-landmark">Nearby Landmark <span class="optional-tag">(Optional)</span></label>
+            <input id="non-lagos-landmark" class="phone-input" type="text" autocomplete="off" placeholder="Enter a nearby landmark (optional)">
+
+            <p class="route-note">Thank you for shopping with Avien Skin. Delivery charges for locations outside Lagos will be confirmed by our customer service team on WhatsApp. Please send your order to us and we will provide the delivery cost and payment details.</p>
+          </div>
         </div>
       </section>
     </div>
 
     <div class="cart-foot">
-      <div class="summary-line">
-        <span>Product Subtotal</span>
-        <span id="summary-subtotal">₦0</span>
+      <div id="summary-placeholder" class="summary-group">
+        <div class="summary-line">
+          <span>Product Subtotal</span>
+          <span id="summary-subtotal">₦0</span>
+        </div>
+        <p id="summary-hint" class="summary-hint">Select your state to see delivery options and your total.</p>
       </div>
-      <div class="summary-line">
-        <span>Selected Delivery Location</span>
-        <span id="summary-location" class="is-muted">Not selected</span>
+
+      <div id="lagos-summary" class="summary-group" hidden>
+        <div class="summary-line">
+          <span>Product Subtotal</span>
+          <span id="lagos-subtotal">₦0</span>
+        </div>
+        <div class="summary-line">
+          <span>Delivery Location</span>
+          <span id="summary-location" class="is-muted">Not selected</span>
+        </div>
+        <div class="summary-line">
+          <span>Delivery Fee</span>
+          <span id="summary-delivery">₦0</span>
+        </div>
+        <div class="summary-total">
+          <span>Total Amount Payable</span>
+          <span id="cart-total" class="cart-total-price">₦0</span>
+        </div>
       </div>
-      <div class="summary-line">
-        <span>Delivery Fee</span>
-        <span id="summary-delivery">₦0</span>
+
+      <div id="non-lagos-summary" class="summary-group" hidden>
+        <div class="summary-line">
+          <span>Product Subtotal</span>
+          <span id="non-lagos-subtotal">₦0</span>
+        </div>
+        <div class="summary-line">
+          <span>Selected State</span>
+          <span id="non-lagos-summary-state">—</span>
+        </div>
+        <div class="summary-line">
+          <span>Delivery Fee</span>
+          <span id="non-lagos-summary-delivery">To be confirmed on WhatsApp</span>
+        </div>
+        <p class="summary-hint">Delivery charges outside Lagos are confirmed by our customer service team on WhatsApp.</p>
       </div>
-      <div class="summary-total">
-        <span>Total Amount Payable</span>
-        <span id="cart-total" class="cart-total-price">₦0</span>
-      </div>
-      <button id="checkout-btn" class="btn btn-gold checkout-cta is-disabled" type="button" aria-disabled="true">
+
+      <button id="checkout-btn" class="btn btn-gold checkout-cta is-disabled" type="button" aria-disabled="true" hidden>
         MAKE PAYMENT
+      </button>
+      <button id="non-lagos-whatsapp-btn" class="btn btn-gold checkout-cta is-disabled" type="button" aria-disabled="true" hidden>
+        SEND ORDER TO WHATSAPP
       </button>
       <button id="clear-cart" class="btn btn-outline btn-sm clear-cart-btn" type="button">Clear Bag</button>
     </div>
